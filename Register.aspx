@@ -80,6 +80,32 @@
 
             <form id="Form1" runat="server">
                 <div class="form-group">
+                    <asp:Label ID="firstNameLbl" runat="server" Text="First Name:"></asp:Label><br />
+                    <asp:TextBox ID="firstNameTxtBox" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="firstNameValid" runat="server" ErrorMessage="*" ControlToValidate="firstNameTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="lastNameLbl" runat="server" Text="Last Name: "></asp:Label><br />
+                    <asp:TextBox ID="lastNameTxtBox" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="lastNameValid" runat="server" ErrorMessage="*" ControlToValidate="lastNameTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="contactLbl" runat="server" Text="Contact Number:"></asp:Label><br />
+                    <asp:TextBox ID="contactTxtBox" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="contactValid" runat="server" ErrorMessage="*" ControlToValidate="contactTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="contactValid2" runat="server" ErrorMessage="Enter a valid phone number!" ControlToValidate="contactTxtBox" ForeColor="#CC0000" ValidationExpression="^09\d{9}$"></asp:RegularExpressionValidator><br />
+                </div>
+
+                <div class="form-group">
+                    <asp:Label ID="addLbl" runat="server" Text="Address:"></asp:Label><br />
+                    <asp:TextBox ID="addTxtBox" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="addValid" runat="server" ErrorMessage="*" ControlToValidate="addTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="addValid2" runat="server" ErrorMessage="Must have more than 3 characters! " ValidationExpression="^[a-zA-Z, ]{3,}(?:[ -][a-zA-Z, ]{3,})*$" ControlToValidate="addTxtBox" ForeColor="#CC0000"></asp:RegularExpressionValidator><br />
+                </div>
+
+                <div class="form-group">
                     <asp:Label ID="usernameLbl" runat="server" Text="Enter a username:"></asp:Label><br />
                     <asp:TextBox ID="usernameTxtBox" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="usernameValid" runat="server" ErrorMessage="*" ControlToValidate="usernameTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
@@ -87,16 +113,18 @@
 
                 <div class="form-group">
                     <asp:Label ID="passLbl" runat="server" Text="Enter a password:"></asp:Label><br />
-                    <asp:TextBox ID="passTxtBox" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="passTxtBox" runat="server" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="passValid" runat="server" ErrorMessage="*" ControlToValidate="passTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
                 </div>
 
                 <div class="form-group">
                     <asp:Label ID="passLbl2" runat="server" Text="Confirm your password:"></asp:Label><br />
-                    <asp:TextBox ID="passTxtBox2" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="passTxtBox2" runat="server" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="passValid2" runat="server" ErrorMessage="*" ControlToValidate="passTxtBox2" ForeColor="#CC0000"></asp:RequiredFieldValidator>
                     <asp:CompareValidator ID="passValid3" runat="server" ErrorMessage="Passwords must match!" ControlToValidate="passTxtBox2" ControlToCompare="passTxtBox" ForeColor="#CC0000"></asp:CompareValidator><br />
                 </div>
+
+                
 
                 <asp:Button ID="regBtn" class ="regBtn" runat="server" Text="Register" onclick="regBtn_Click"/><br />
                 <div class="login-link"> Already have an account? <a href="Login.aspx">Login here!</a>
