@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="NavBar.Master.cs" Inherits="CS107L_MP.Site1" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="LogInNav.Master.cs" Inherits="CS107L_MP.Site2" %>
 
 <!DOCTYPE html>
 
@@ -38,14 +38,6 @@
             height: 40px;
         }
 
-        .navbar .right-links {
-            margin-left: auto;
-        }
-
-        /* Adjust styles for login and register links */
-        .navbar .right-links a {
-            margin-left: 10px; /* Add some space between links */
-        }
 
         
 </style>
@@ -54,11 +46,7 @@
     
     <div class="navbar">
         <a href="Home.aspx" class="logo"><img src="#" alt="Logo"></a>
-        <div class ="right-links">
-            <a href="About.aspx">About Us</a>
-            <a href="Login.aspx">Login</a>
-            <a href="Register.aspx">Register</a>
-        </div>
+
         
     </div>
 

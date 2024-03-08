@@ -42,6 +42,15 @@ namespace CS107L_MP
         protected global::System.Web.UI.WebControls.TextBox usernameTxtBox;
 
         /// <summary>
+        /// usernameValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator usernameValid;
+
+        /// <summary>
         /// passLbl control.
         /// </summary>
         /// <remarks>
@@ -60,6 +69,15 @@ namespace CS107L_MP
         protected global::System.Web.UI.WebControls.TextBox passTxtBox;
 
         /// <summary>
+        /// passValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator passValid;
+
+        /// <summary>
         /// passLbl2 control.
         /// </summary>
         /// <remarks>
@@ -76,6 +94,24 @@ namespace CS107L_MP
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox passTxtBox2;
+
+        /// <summary>
+        /// passValid2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator passValid2;
+
+        /// <summary>
+        /// passValid3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator passValid3;
 
         /// <summary>
         /// regBtn control.

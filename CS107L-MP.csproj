@@ -118,10 +118,26 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="LogInNav.Master.cs">
+      <DependentUpon>LogInNav.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LogInNav.Master.designer.cs">
+      <DependentUpon>LogInNav.Master</DependentUpon>
+    </Compile>
+    <Compile Include="OrderNav.Master.cs">
+      <DependentUpon>OrderNav.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderNav.Master.designer.cs">
+      <DependentUpon>OrderNav.Master</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="NavBar.Master" />
+    <Content Include="LogInNav.Master" />
+    <Content Include="OrderNav.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

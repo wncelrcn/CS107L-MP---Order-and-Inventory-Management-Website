@@ -42,6 +42,15 @@ namespace CS107L_MP
         protected global::System.Web.UI.WebControls.TextBox usernameTxtBox;
 
         /// <summary>
+        /// userLoginValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator userLoginValid;
+
+        /// <summary>
         /// passLbl control.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace CS107L_MP
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox passTxtBox;
+
+        /// <summary>
+        /// passLoginValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator passLoginValid;
 
         /// <summary>
         /// loginBtn control.

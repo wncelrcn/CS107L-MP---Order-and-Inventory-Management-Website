@@ -1,13 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="CS107L_MP.WebForm3" %>
+﻿<%@ Page Title="Register to _________ "Language="C#" MasterPageFile="~/LogInNav.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="CS107L_MP.WebForm3" %>
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Register to _____</title>
 
+<asp:Content ID="RegisterContent" ContentPlaceHolderID="MainContent" runat="server">
     <style>
-         body {
+         .register-body {
            font-family: sans-serif;
            margin: 0;
            padding: 0;
@@ -77,35 +74,36 @@
              color: lightblue;
          }
     </style>
+    <div class ="register-body">
+        <div class ="register-container">
+            <h1>Register</h1>
 
+            <form id="Form1" runat="server">
+                <div class="form-group">
+                    <asp:Label ID="usernameLbl" runat="server" Text="Enter a username:"></asp:Label><br />
+                    <asp:TextBox ID="usernameTxtBox" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="usernameValid" runat="server" ErrorMessage="*" ControlToValidate="usernameTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
+                </div>
 
+                <div class="form-group">
+                    <asp:Label ID="passLbl" runat="server" Text="Enter a password:"></asp:Label><br />
+                    <asp:TextBox ID="passTxtBox" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="passValid" runat="server" ErrorMessage="*" ControlToValidate="passTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
+                </div>
 
-</head>
-<body>
-    <div class ="register-container">
-    <h1>Register</h1>
+                <div class="form-group">
+                    <asp:Label ID="passLbl2" runat="server" Text="Confirm your password:"></asp:Label><br />
+                    <asp:TextBox ID="passTxtBox2" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="passValid2" runat="server" ErrorMessage="*" ControlToValidate="passTxtBox2" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+                    <asp:CompareValidator ID="passValid3" runat="server" ErrorMessage="Passwords must match!" ControlToValidate="passTxtBox2" ControlToCompare="passTxtBox" ForeColor="#CC0000"></asp:CompareValidator><br />
+                </div>
 
-    <form id="Form1" runat="server">
-        <div class="form-group">
-            <asp:Label ID="usernameLbl" runat="server" Text="Enter a username:"></asp:Label><br />
-            <asp:TextBox ID="usernameTxtBox" runat="server"></asp:TextBox><br />
+                <asp:Button ID="regBtn" class ="regBtn" runat="server" Text="Register" onclick="regBtn_Click"/><br />
+                <div class="login-link"> Already have an account? <a href="Login.aspx">Login here!</a>
+
+                </div>
+            </form>
         </div>
+    </div>
+</asp:Content> 
 
-        <div class="form-group">
-            <asp:Label ID="passLbl" runat="server" Text="Enter a password:"></asp:Label><br />
-            <asp:TextBox ID="passTxtBox" runat="server"></asp:TextBox><br />
-        </div>
-
-        <div class="form-group">
-            <asp:Label ID="passLbl2" runat="server" Text="Confirm your password:"></asp:Label><br />
-            <asp:TextBox ID="passTxtBox2" runat="server"></asp:TextBox><br />
-        </div>
-
-        <asp:Button ID="regBtn" class ="regBtn" runat="server" Text="Register" onclick="regBtn_Click"/><br />
-        <div class="login-link"> Already have an account? <a href="Login.aspx">Login here!</a>
-
-        </div>
-    </form>
-</div>
-</body>
-</html>

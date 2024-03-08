@@ -11,12 +11,25 @@ namespace CS107L_MP
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            this.UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
         }
 
         protected void loginBtn_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Home.aspx");
+            if (Page.IsValid)
+            {
+                //mema  
+                // Set the session variable for the username
+                Session["Username"] = usernameTxtBox.Text;
+
+                // Redirect to the Order.aspx page
+                Response.Redirect("Order.aspx?username=" + usernameTxtBox.Text);
+            }
+            else
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please check your Inputs.');", true);
+            }
         }
+
     }
 }
