@@ -16,7 +16,7 @@ namespace CS107L_MP
 
         protected void regBtn_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("Login.aspx");
         }
     }
 }
