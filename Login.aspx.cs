@@ -13,5 +13,10 @@ namespace CS107L_MP
         {
 
         }
+
+        protected void loginBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
