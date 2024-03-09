@@ -69,9 +69,9 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="App_Data\Schema.sql" />
-    <Content Include="App_Data\Users.mdf" />
-    <Content Include="App_Data\Users_log.ldf">
-      <DependentUpon>Users.mdf</DependentUpon>
+    <Content Include="App_Data\websiteDatabase.mdf" />
+    <Content Include="App_Data\websiteDatabase_log.ldf">
+      <DependentUpon>websiteDatabase.mdf</DependentUpon>
     </Content>
     <Content Include="Order.aspx" />
     <Content Include="Web.config" />
