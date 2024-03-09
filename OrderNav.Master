@@ -55,7 +55,8 @@
     <div class="navbar">
         <a href="Order.aspx" class="logo"><img src="#" alt="Logo"></a>
         <div class ="right-links">
-            <a href="#">My Cart</a>
+            <a href="Cart.aspx">My Cart</a>
+            <a href="MyOrders.aspx">My Orders</a>
             <a href="Home.aspx">Log Out</a>
             
         </div>

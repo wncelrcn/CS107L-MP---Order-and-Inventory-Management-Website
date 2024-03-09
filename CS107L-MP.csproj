@@ -73,6 +73,8 @@
     <Content Include="App_Data\websiteDatabase_log.ldf">
       <DependentUpon>websiteDatabase.mdf</DependentUpon>
     </Content>
+    <Content Include="Cart.aspx" />
+    <Content Include="MyOrders.aspx" />
     <Content Include="Order.aspx" />
     <Content Include="Web.config" />
     <Content Include="Home.aspx" />
@@ -88,6 +90,20 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App\Users\UserRepository.cs" />
+    <Compile Include="Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyOrders.aspx.cs">
+      <DependentUpon>MyOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyOrders.aspx.designer.cs">
+      <DependentUpon>MyOrders.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Order.aspx.cs">
       <DependentUpon>Order.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
