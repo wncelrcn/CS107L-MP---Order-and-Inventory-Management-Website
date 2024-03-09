@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -18,12 +19,48 @@ namespace CS107L_MP
         {
             if (Page.IsValid)
             {
-                //mema  
-                // Set the session variable for the username
-                Session["Username"] = usernameTxtBox.Text;
+                // Retrieve username and password from the login form
+                string username = usernameTxtBox.Text;
+                string password = passTxtBox.Text;
 
-                // Redirect to the Order.aspx page
-                Response.Redirect("Order.aspx?username=" + usernameTxtBox.Text);
+                try
+                {
+                    // Establish connection to the SQL database
+                    string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\CS107L-MP---Order-and-Inventory-Management-Website\App_Data\Users.mdf;Integrated Security=True";
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        // Check if the username and password combination exists in AuthUsers table
+                        string query = "SELECT COUNT(*) FROM AuthUsers WHERE username = @username AND password = @password";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.Parameters.AddWithValue("@username", username);
+                        command.Parameters.AddWithValue("@password", password);
+                        int count = (int)command.ExecuteScalar();
+
+                        if (count > 0)
+                        {
+                            // Authentication successful
+                            // Set the session variable for the username
+                            Session["Username"] = username;
+
+                            // Redirect to the Order.aspx page
+                            Response.Redirect("Order.aspx?username=" + username);
+                        }
+                        else
+                        {
+                            // Authentication failed
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid username or password.');", true);
+                        }
+
+                        connection.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('An error occurred: " + ex.Message + "');", true);
+                }
             }
             else
             {
