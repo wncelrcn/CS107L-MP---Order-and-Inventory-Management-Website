@@ -34,8 +34,8 @@ namespace CS107L_MP
 
                 try
                 {
-                    
-                    string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\CS107L-MP---Order-and-Inventory-Management-Website\App_Data\Users.mdf;Integrated Security=True";
+
+                    string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
