@@ -26,7 +26,7 @@ namespace CS107L_MP
                 try
                 {
                     // Establish connection to the SQL database
-                    string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\CS107L-MP---Order-and-Inventory-Management-Website\App_Data\Users.mdf;Integrated Security=True";
+                    string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=""C:\Users\itswi\Documents\Computer Science (2nd Year)\2ND TERM\CS107L\CS107L-MP\App_Data\Users.mdf"";Integrated Security=True";
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
@@ -45,7 +45,7 @@ namespace CS107L_MP
                             Session["Username"] = username;
 
                             // Redirect to the Order.aspx page
-                            Response.Redirect("Order.aspx?username=" + username);
+                            Response.Redirect("Order.aspx");
                         }
                         else
                         {
