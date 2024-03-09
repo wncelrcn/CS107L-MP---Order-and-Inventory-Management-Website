@@ -90,7 +90,7 @@
                     <asp:Label ID="passLbl" runat="server" Text="Password:"></asp:Label><br />
                     <asp:TextBox ID="passTxtBox" runat="server" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="passLoginValid" runat="server" ErrorMessage="*" ControlToValidate="passTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator>
-
+                        
                 </div>
                 <asp:Button ID="loginBtn" class="loginBtn" runat="server" Text="Log in" onclick="loginBtn_Click"/><br />
                  <div class="register-link">  Don't have an account? <a href="Register.aspx">Register here!</a>

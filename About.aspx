@@ -37,19 +37,7 @@
             color: #333;
         }
 
-        footer p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            color: #fff; /* Set the text color to white */
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: auto;
-        }
+        
     </style>
 
     <div class="container">
@@ -70,7 +58,5 @@
         <p>We embrace cutting-edge technology to enhance the efficiency of our distribution system. Our state-of-the-art Sales and Inventory Management System ensures real-time tracking, order fulfillment, and inventory control, providing franchisees with the tools they need for success.</p>
     </div>
 
-    <footer>
-        <p>2024 _____________. All rights reserved.</p>
-    </footer>
+
 </asp:Content>

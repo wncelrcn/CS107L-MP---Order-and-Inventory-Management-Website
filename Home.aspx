@@ -71,7 +71,7 @@
         <div class="hero-content">
           <h2>Your First Brew Coffee Needs, now here.</h2>
           <p>Order online and blah blah blah blah blah.</p>
-          <a href="Order.aspx" class="btn">Order Now</a>
+          <a href="Login.aspx" class="btn">Order Now</a>
         </div>
 
     </section>
