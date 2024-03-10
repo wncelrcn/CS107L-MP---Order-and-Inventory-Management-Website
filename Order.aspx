@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrderNav.Master" AutoEventWireup="true" CodeBehind="Order.aspx.cs" Inherits="CS107L_MP.Order" %>
 <asp:Content ID="OrderPage" ContentPlaceHolderID="MainContent" runat="server">
     <style>
+
         /* Adjustments to make the product containers centered */
         .products-container {
             text-align: center;
@@ -125,12 +126,12 @@
     <h2>Product List</h2>
     <form id="Form1" runat="server">
         <div class ="dropdown-container">
-            <asp:DropDownList ID="CategoryDropDown" class="dropDown" runat="server" AutoPostBack="True">
+            <asp:DropDownList ID="CategoryDropDown" class="dropDown" runat="server" AutoPostBack="True" OnSelectedIndexChanged="CategoryDropDown_SelectedIndexChanged">
                 <asp:ListItem Text="All Categories" Value=""></asp:ListItem>
                 <asp:ListItem Text="Coffee Essentials" Value="Coffee"></asp:ListItem>
                 <asp:ListItem Text="Fruit Tea Essentials" Value="FruitTea"></asp:ListItem>
                 <asp:ListItem Text="Milktea Essentials" Value="Milktea"></asp:ListItem>
-                <asp:ListItem Text="Other Items" Value="Misc"></asp:ListItem>
+                <asp:ListItem Text="Other Essentials" Value="Misc"></asp:ListItem>
             </asp:DropDownList>
         </div>
 
@@ -151,5 +152,6 @@
                 </ItemTemplate>
             </asp:Repeater>
         </div>
+
     </form>
 </asp:Content>

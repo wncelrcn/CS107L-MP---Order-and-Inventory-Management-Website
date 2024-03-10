@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data.SqlClient;
 using CS107L_MP.App.Products;
 
 namespace CS107L_MP
@@ -14,37 +11,61 @@ namespace CS107L_MP
         {
             if (!IsPostBack)
             {
-                var products = AllProducts();
+                string selectedCategory = CategoryDropDown.SelectedValue;
+                var products = AllProducts(selectedCategory);
 
-                // Bind the repeater to the list of products
                 ProductRepeater.DataSource = products;
                 ProductRepeater.DataBind();
             }
         }
 
-        // Sample data for demonstration
-        public IEnumerable<Product> AllProducts()
+        // Event handler for category selection change
+        protected void CategoryDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string selectedCategory = CategoryDropDown.SelectedValue;
+            var products = AllProducts(selectedCategory);
 
-            return new List<Product>()
+            // Bind the repeater to the list of products
+            ProductRepeater.DataSource = products;
+            ProductRepeater.DataBind();
+        }
+
+        // Method to retrieve products from the database based on category
+        public IEnumerable<Product> AllProducts(string category)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            string query = "SELECT ProductName, Price, Stock FROM Products";
+            if (!string.IsNullOrEmpty(category))
             {
-                new Product() { Name = "Hatdog", Price = 69.00, Stock = 100 },
-                new Product() { Name = "Hatdog din", Price = 20.00, Stock = 50 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 },
-                new Product() { Name = "Jumbo hatdog", Price = 56.00, Stock = 200 }
-            };
+                query += " WHERE Category = @Category";
+            }
+
+            // List to store products
+            List<Product> products = new List<Product>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                if (!string.IsNullOrEmpty(category))
+                {
+                    command.Parameters.AddWithValue("@Category", category);
+                }
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Read data and create Product objects
+                while (reader.Read())
+                {
+                    Product product = new Product();
+                    product.Name = reader["ProductName"].ToString();
+                    product.Price = Convert.ToDouble(reader["Price"]);
+                    product.Stock = Convert.ToInt32(reader["Stock"]);
+                    products.Add(product);
+                }
+            }
+
+            return products;
         }
     }
 }
