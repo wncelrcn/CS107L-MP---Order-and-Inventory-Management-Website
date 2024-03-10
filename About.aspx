@@ -2,6 +2,12 @@
 <asp:Content ID="AboutPage" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+        }
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -38,6 +44,19 @@
         }
 
         
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        footer p {
+            color: #fff; 
+        }
+
+        
     </style>
 
     <div class="container">
@@ -58,5 +77,8 @@
         <p>We embrace cutting-edge technology to enhance the efficiency of our distribution system. Our state-of-the-art Sales and Inventory Management System ensures real-time tracking, order fulfillment, and inventory control, providing franchisees with the tools they need for success.</p>
     </div>
 
+    <footer>
+    <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+    </footer>
 
 </asp:Content>

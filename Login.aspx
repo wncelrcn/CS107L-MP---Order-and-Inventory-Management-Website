@@ -3,8 +3,11 @@
 <asp:Content ID="LogInContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
         .login-body {
-          font-family: sans-serif;
+          font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
           margin: 0;
           padding: 0;
           display: flex;

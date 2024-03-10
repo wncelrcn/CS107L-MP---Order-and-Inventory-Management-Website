@@ -2,6 +2,13 @@
 <asp:Content ID="OrderPage" ContentPlaceHolderID="MainContent" runat="server">
     <style>
 
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        /* Apply font-family */
+        body {
+            font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         /* Adjustments to make the product containers centered */
         .products-container {
             text-align: center;
