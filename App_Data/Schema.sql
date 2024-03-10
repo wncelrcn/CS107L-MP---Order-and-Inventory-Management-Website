@@ -17,6 +17,18 @@ CREATE TABLE AuthUsers(
 	FOREIGN KEY (username) REFERENCES Users(username)
 );
 
+--for ShoppingCart Table
+
+DROP TABLE IF EXISTS ShoppingCart
+
+CREATE TABLE ShoppingCart (
+    ProductID INT,
+    ProductName NVARCHAR(255),
+    Username VARCHAR(100),
+    Quantity INT,
+    TotalPrice DECIMAL(18,2)
+);
+
 
 --for Products Table
 DROP TABLE IF EXISTS Products
