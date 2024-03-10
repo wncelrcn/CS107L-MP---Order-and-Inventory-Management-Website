@@ -115,7 +115,7 @@
         }
 
         .add-to-cart-button:hover {
-            background-color: #00796b;
+            background-color: #00796b;  
         }
 
 
@@ -125,7 +125,7 @@
     <h2>Product List</h2>
     <form id="Form1" runat="server">
         <div class ="dropdown-container">
-            <asp:DropDownList ID="CategoryDropDown" class="dropDown" runat="server" AutoPostBack="True">
+            <asp:DropDownList ID="CategoryDropDown" class="dropDown" runat="server" AutoPostBack="True" OnSelectedIndexChanged="CategoryDropDown_SelectedIndexChanged">
                 <asp:ListItem Text="All Categories" Value=""></asp:ListItem>
                 <asp:ListItem Text="Coffee Essentials" Value="Coffee"></asp:ListItem>
                 <asp:ListItem Text="Fruit Tea Essentials" Value="FruitTea"></asp:ListItem>
@@ -142,6 +142,7 @@
                         <p class="product-name"><%# Eval("Name") %></p>
                         <p class="product-price">Price: <%# Eval("Price", "{0:C}") %></p>
                         <p class="product-stock">Stock: <%# Eval("Stock") %></p>
+                        
                         <div class="product-actions">
                             <label for="quantity_<%# Container.ItemIndex %>">Quantity:</label>
                             <input type="number" id="quantity_<%# Container.ItemIndex %>" class="quantity-input" value="1" min="1" />

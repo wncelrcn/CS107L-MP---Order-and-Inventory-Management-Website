@@ -45,7 +45,7 @@ namespace CS107L_MP
                             Session["Username"] = username;
 
                             // Redirect to the Order.aspx page
-                            Response.Redirect("Order.aspx");
+                            Response.Redirect("Order.aspx?username=" + username);
                         }
                         else
                         {
