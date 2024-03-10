@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Web.UI.WebControls;
 using CS107L_MP.App.Products;
 
 namespace CS107L_MP
@@ -35,7 +36,7 @@ namespace CS107L_MP
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-            string query = "SELECT ProductName, Price, Stock FROM Products";
+            string query = "SELECT ProductID, ProductName, Price, Stock FROM Products";
             if (!string.IsNullOrEmpty(category))
             {
                 query += " WHERE Category = @Category";
@@ -58,6 +59,7 @@ namespace CS107L_MP
                 while (reader.Read())
                 {
                     Product product = new Product();
+                    product.ProductId = reader["ProductId"].ToString();
                     product.Name = reader["ProductName"].ToString();
                     product.Price = Convert.ToDouble(reader["Price"]);
                     product.Stock = Convert.ToInt32(reader["Stock"]);
@@ -67,6 +69,28 @@ namespace CS107L_MP
 
             return products;
         }
-        
+
+        protected void AddToCart_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            RepeaterItem item = (RepeaterItem)btn.NamingContainer;
+
+            // Extract product information and quantity from CommandArgument
+            string[] args = btn.CommandArgument.Split(';');
+            string productId = args[0];
+            string productName = args[1];
+            double price = double.Parse(args[2]);
+            int quantity = int.Parse(((TextBox)item.FindControl("quantityNo")).Text);
+
+            // Calculate total price
+            double totalPrice = price * quantity;
+
+            // Display information in alert
+            string alertMessage = $"Product ID: {productId}, Product Name: {productName}, Username: {Session["Username"]}, Quantity: {quantity}, Total Price: {totalPrice:C}";
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{alertMessage}');", true);
+
+
+
+        }
     }
 }

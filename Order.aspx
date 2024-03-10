@@ -145,9 +145,9 @@
                         <p class="product-stock">Stock: <%# Eval("Stock") %></p>
                         
                         <div class="product-actions">
-                            <label for="quantity_<%# Container.ItemIndex %>">Quantity:</label>
-                            <input type="number" id="quantity_<%# Container.ItemIndex %>" class="quantity-input" value="1" min="1" />
-                            <asp:Button runat="server" Text="Add to Cart" CssClass="add-to-cart-button" CommandArgument='<%# Eval("ProductId") %>' />
+                            <label for="quantity_lbl">Quantity:</label>
+                            <asp:TextBox ID="quantityNo" CssClass="quantity-input" runat="server" TextMode="Number" value="1" min="1"></asp:TextBox>
+                            <asp:Button runat="server" Text="Add to Cart" CssClass="add-to-cart-button" CommandName="AddToCart" CommandArgument='<%# Eval("ProductId") + ";" + Eval("Name") + ";" + Eval("Price") %>' onclick="AddToCart_Click"/>
                         </div>
                     </div>
                 </ItemTemplate>
