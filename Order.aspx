@@ -116,7 +116,7 @@
         }
 
         .add-to-cart-button:hover {
-            background-color: #00796b;
+            background-color: #00796b;  
         }
 
 
@@ -143,6 +143,7 @@
                         <p class="product-name"><%# Eval("Name") %></p>
                         <p class="product-price">Price: <%# Eval("Price", "{0:C}") %></p>
                         <p class="product-stock">Stock: <%# Eval("Stock") %></p>
+                        
                         <div class="product-actions">
                             <label for="quantity_<%# Container.ItemIndex %>">Quantity:</label>
                             <input type="number" id="quantity_<%# Container.ItemIndex %>" class="quantity-input" value="1" min="1" />
