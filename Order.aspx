@@ -142,7 +142,7 @@
                     <div class="product-container">
                         <p class="product-name"><%# Eval("Name") %></p>
                         <p class="product-price">Price: <%# Eval("Price", "{0:C}") %></p>
-                        <p class="product-stock">Stock: <%# Eval("Stock") %></p>
+                        <p class="product-stock">Stock: <asp:Label ID="stockLabel" runat="server" Text='<%# Eval("Stock") %>'></asp:Label></p>
                         
                         <div class="product-actions">
                             <label for="quantity_lbl">Quantity:</label>

@@ -17,6 +17,22 @@ namespace CS107L_MP
 
                 ProductRepeater.DataSource = products;
                 ProductRepeater.DataBind();
+              
+            }
+            SetMaxQuantityValues();
+
+        }
+
+        // Method to set the maximum value for the quantity textboxes based on available stock
+        private void SetMaxQuantityValues()
+        {
+            foreach (RepeaterItem item in ProductRepeater.Items)
+            {
+                TextBox quantityTextBox = (TextBox)item.FindControl("quantityNo");
+                Label stockLabel = (Label)item.FindControl("stockLabel");
+
+                int maxQuantity = int.Parse(stockLabel.Text); // Set the maximum value based on the available stock
+                quantityTextBox.Attributes["max"] = maxQuantity.ToString();
             }
         }
 
@@ -29,6 +45,10 @@ namespace CS107L_MP
             // Bind the repeater to the list of products
             ProductRepeater.DataSource = products;
             ProductRepeater.DataBind();
+
+
+            SetMaxQuantityValues();
+
         }
 
         // Method to retrieve products from the database based on category
@@ -74,6 +94,15 @@ namespace CS107L_MP
         {
             Button btn = (Button)sender;
             RepeaterItem item = (RepeaterItem)btn.NamingContainer;
+            TextBox quantityTextBox = (TextBox)item.FindControl("quantityNo");
+
+            // Check if the quantity textbox is empty
+            if (string.IsNullOrEmpty(quantityTextBox.Text))
+            {
+                // Display an alert indicating that the quantity cannot be empty
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please enter a quantity.');", true);
+                return; // Exit the method if the quantity is empty
+            }
 
             // Extract product information and quantity from CommandArgument
             string[] args = btn.CommandArgument.Split(';');
@@ -81,6 +110,7 @@ namespace CS107L_MP
             string productName = args[1];
             double price = double.Parse(args[2]);
             int quantity = int.Parse(((TextBox)item.FindControl("quantityNo")).Text);
+                      
 
             // Calculate total price
             double totalPrice = price * quantity;
@@ -88,6 +118,9 @@ namespace CS107L_MP
             // Display information in alert
             string alertMessage = $"Product ID: {productId}, Product Name: {productName}, Username: {Session["Username"]}, Quantity: {quantity}, Total Price: {totalPrice:C}";
             ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{alertMessage}');", true);
+
+            // Reset the quantity to 1
+            quantityTextBox.Text = "1";
 
 
 
