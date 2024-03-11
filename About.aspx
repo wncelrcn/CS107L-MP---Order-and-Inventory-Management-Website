@@ -2,6 +2,11 @@
 <asp:Content ID="AboutPage" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+        }
         .container {
             max-width: 800px;
             margin: 0 auto;
