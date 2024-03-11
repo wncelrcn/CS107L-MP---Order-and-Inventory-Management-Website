@@ -78,3 +78,16 @@ INSERT INTO Products (ProductID, ProductName, Price, Stock, Category) VALUES
 (46, 'DOME LIDS 100PCS', 150.00, 6, 'Misc'),
 (47, 'TAKE OUT PLASTIC SINGLE 100PCS', 150.00, 64, 'Misc'),
 (48, 'TAKE OUT PLASTIC DOUBLE 100PCS', 200.00, 53, 'Misc');
+
+
+--for ShoppingCart Table
+DROP TABLE IF EXISTS ShoppingCart
+
+CREATE TABLE ShoppingCart (
+    ProductID INT, 
+    ProductName NVARCHAR (255),
+    UnitPrice DECIMAL (18, 2),
+    Username VARCHAR (100),
+    Quantity INT,
+    TotalPrice DECIMAL (18, 2) 
+);

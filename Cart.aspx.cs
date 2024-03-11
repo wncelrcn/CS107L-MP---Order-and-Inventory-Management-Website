@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+using System.Data.SqlClient;
 using System.Web.UI.WebControls;
+using CS107L_MP.App.Cart;
 
 namespace CS107L_MP
 {
@@ -11,6 +10,131 @@ namespace CS107L_MP
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                LoadCart();
+            }
+        }
+
+        // Method to load cart items
+        private void LoadCart()
+        {
+            // Get the currently logged-in username
+            string username = Session["Username"] != null ? Session["Username"].ToString() : "";
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                // Get cart items for the specific user
+                IEnumerable<MyCart> cartItems = GetCartItems(username);
+
+                // Bind cart items to the repeater
+                ItemRepeater.DataSource = cartItems;
+                ItemRepeater.DataBind();
+            }
+            else
+            {
+                // Redirect to login page or handle accordingly if user is not logged in
+                Response.Redirect("~/Login.aspx");
+            }
+        }
+
+        // Method to fetch cart items for a specific user from the database
+        private IEnumerable<MyCart> GetCartItems(string username)
+        {
+            List<MyCart> cartItems = new List<MyCart>();
+
+            // Connect to the database and retrieve cart items for the specific user
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            string query = "SELECT ShoppingCart.ProductID, Products.ProductName, ShoppingCart.Quantity, ShoppingCart.UnitPrice, ShoppingCart.TotalPrice, Products.Stock FROM ShoppingCart INNER JOIN Products ON ShoppingCart.ProductID = Products.ProductID WHERE Username = @Username";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Username", username);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Read data and create MyCart objects
+                while (reader.Read())
+                {
+                    MyCart cartItem = new MyCart();
+                    cartItem.ProductName = reader["ProductName"].ToString();
+                    cartItem.ProductId = reader["ProductId"].ToString();
+                    cartItem.Price = Convert.ToDouble(reader["UnitPrice"]);
+                    cartItem.Quantity = Convert.ToInt32(reader["Quantity"]);
+                    cartItem.TotalPrice = Convert.ToDouble(reader["TotalPrice"]);
+                    cartItems.Add(cartItem);
+                }
+            }
+
+            return cartItems;
+        }
+
+
+
+
+
+
+        // Event handler for removing items from the cart
+        protected void RemoveFromCart_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string productId = btn.CommandArgument; // Retrieve the product ID directly from CommandArgument
+
+            // Get the currently logged-in username
+            string username = Session["Username"] != null ? Session["Username"].ToString() : "";
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                // Remove the item from the cart for the specific user
+                RemoveCartItem(username, productId);
+
+                // Reload the cart to reflect the changes
+                LoadCart();
+            }
+            else
+            {
+                // Redirect to login page or handle accordingly if user is not logged in
+                Response.Redirect("~/Login.aspx");
+            }
+        }
+
+
+        // Method to remove an item from the cart for a specific user
+        private void RemoveCartItem(string username, string productId)
+        {
+            // Connect to the database and remove the item from the cart for the specific user
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            string query = "DELETE FROM ShoppingCart WHERE Username = @Username AND ProductId = @ProductId";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Username", username);
+                command.Parameters.AddWithValue("@ProductId", productId);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        protected void minusButton_Click(object sender, EventArgs e)
+        {
+           
+
+
+
+
+
+        }
+
+        protected void plusButton_Click(object sender, EventArgs e)
+        {
+              
+
+
+
+
+
 
         }
     }

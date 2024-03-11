@@ -17,7 +17,7 @@ namespace CS107L_MP
 
                 ProductRepeater.DataSource = products;
                 ProductRepeater.DataBind();
-              
+
             }
             SetMaxQuantityValues();
 
@@ -110,20 +110,66 @@ namespace CS107L_MP
             string productName = args[1];
             double price = double.Parse(args[2]);
             int quantity = int.Parse(((TextBox)item.FindControl("quantityNo")).Text);
-                      
 
             // Calculate total price
             double totalPrice = price * quantity;
 
             // Display information in alert
-            string alertMessage = $"Product ID: {productId}, Product Name: {productName}, Username: {Session["Username"]}, Quantity: {quantity}, Total Price: {totalPrice:C}";
+            string alertMessage = $"Username: {Session["Username"]}, Product ID: {productId}, Product Name: {productName}, Product Price: {price:C}, Quantity: {quantity}, Total Price: {totalPrice:C}";
             ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{alertMessage}');", true);
 
             // Reset the quantity to 1
             quantityTextBox.Text = "1";
 
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
 
+                // Check if the product is already in the cart for the user
+                string selectQuery = "SELECT COUNT(*) FROM ShoppingCart WHERE ProductID = @ProductID AND Username = @Username";
+                using (SqlCommand selectCommand = new SqlCommand(selectQuery, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("@ProductID", productId);
+                    selectCommand.Parameters.AddWithValue("@Username", Session["Username"]);
 
+                    int existingItemCount = (int)selectCommand.ExecuteScalar();
+
+                    if (existingItemCount > 0)
+                    {
+                        // Update the existing record
+                        string updateQuery = "UPDATE ShoppingCart SET Quantity = Quantity + @Quantity, TotalPrice = TotalPrice + @TotalPrice WHERE ProductID = @ProductID AND Username = @Username";
+                        using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
+                        {
+                            updateCommand.Parameters.AddWithValue("@ProductID", productId);
+                            updateCommand.Parameters.AddWithValue("@Username", Session["Username"]);
+                            updateCommand.Parameters.AddWithValue("@Quantity", quantity);
+                            updateCommand.Parameters.AddWithValue("@TotalPrice", totalPrice);
+
+                            updateCommand.ExecuteNonQuery();
+                        }
+                    }
+                    else
+                    {
+                        // Insert a new record
+                        string insertQuery = "INSERT INTO ShoppingCart (ProductID, ProductName, UnitPrice, Username, Quantity, TotalPrice) " +
+                   "VALUES (@ProductID, @ProductName, @UnitPrice, @Username, @Quantity, @TotalPrice)";
+                        using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+                        {
+                            insertCommand.Parameters.AddWithValue("@ProductID", productId);
+                            insertCommand.Parameters.AddWithValue("@ProductName", productName);
+                            insertCommand.Parameters.AddWithValue("@UnitPrice", price);
+                            insertCommand.Parameters.AddWithValue("@Username", Session["Username"]);
+                            insertCommand.Parameters.AddWithValue("@Quantity", quantity);
+                            insertCommand.Parameters.AddWithValue("@TotalPrice", totalPrice);
+
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
         }
+
     }
+
 }

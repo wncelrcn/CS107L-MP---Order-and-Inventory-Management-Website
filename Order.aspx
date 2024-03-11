@@ -28,20 +28,20 @@
 
         .product-name {
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
             color: #333;
             margin-bottom: 5px;
         }
 
         .product-price {
             color: #009688;
-            font-size: 12px;
+            font-size: 14px;
             margin-bottom: 5px;
         }
 
         .product-stock {
             color: #ff5722;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         /* Clearfix to handle inline-block elements */
