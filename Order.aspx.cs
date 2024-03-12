@@ -109,66 +109,175 @@ namespace CS107L_MP
             string productId = args[0];
             string productName = args[1];
             double price = double.Parse(args[2]);
-            int quantity = int.Parse(((TextBox)item.FindControl("quantityNo")).Text);
+            int requestedQuantity = int.Parse(((TextBox)item.FindControl("quantityNo")).Text);
+
+            
+
+            // Check if the requested quantity exceeds the available stock
+            int availableStock = GetAvailableStock(productId);
+            int cartQuantity = GetCartQuantity(productId);
+
+            if (requestedQuantity + cartQuantity > availableStock)
+            {
+                // Display an alert indicating insufficient stock
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Insufficient stock. Available stock: {availableStock}.');", true);
+                return; // Exit the method if the quantity exceeds stock
+            }
 
             // Calculate total price
-            double totalPrice = price * quantity;
+            double totalPrice = price * requestedQuantity;
+
+            // Check if the product is already in the cart for the user
+            if (IsProductInCart(productId))
+            {
+
+                // Update the existing record
+                UpdateCart(productId, cartQuantity + requestedQuantity, totalPrice);
+            }
+            else
+            {
+                // Insert a new record
+                InsertIntoCart(productId, productName, requestedQuantity, price, totalPrice);
+            }
 
             // Display information in alert
-            string alertMessage = $"Username: {Session["Username"]}, Product ID: {productId}, Product Name: {productName}, Product Price: {price:C}, Quantity: {quantity}, Total Price: {totalPrice:C}";
+            string alertMessage = $"Username: {Session["Username"]}, Product ID: {productId}, Product Name: {productName}, Product Price: {price:C}, Quantity: {requestedQuantity}, Total Price: {totalPrice:C}";
             ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{alertMessage}');", true);
 
             // Reset the quantity to 1
             quantityTextBox.Text = "1";
+        }
 
+        private int GetCartQuantity(string productId)
+        {
+            int cartQuantity = 0;
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                // Check if the product is already in the cart for the user
-                string selectQuery = "SELECT COUNT(*) FROM ShoppingCart WHERE ProductID = @ProductID AND Username = @Username";
-                using (SqlCommand selectCommand = new SqlCommand(selectQuery, connection))
+                string selectQuery = "SELECT Quantity FROM ShoppingCart WHERE ProductID = @ProductID AND Username = @Username";
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
                 {
-                    selectCommand.Parameters.AddWithValue("@ProductID", productId);
-                    selectCommand.Parameters.AddWithValue("@Username", Session["Username"]);
+                    command.Parameters.AddWithValue("@ProductID", productId);
+                    command.Parameters.AddWithValue("@Username", Session["Username"]);
 
-                    int existingItemCount = (int)selectCommand.ExecuteScalar();
+                    SqlDataReader reader = command.ExecuteReader();
 
-                    if (existingItemCount > 0)
+                    if (reader.Read())
                     {
-                        // Update the existing record
-                        string updateQuery = "UPDATE ShoppingCart SET Quantity = Quantity + @Quantity, TotalPrice = TotalPrice + @TotalPrice WHERE ProductID = @ProductID AND Username = @Username";
-                        using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
-                        {
-                            updateCommand.Parameters.AddWithValue("@ProductID", productId);
-                            updateCommand.Parameters.AddWithValue("@Username", Session["Username"]);
-                            updateCommand.Parameters.AddWithValue("@Quantity", quantity);
-                            updateCommand.Parameters.AddWithValue("@TotalPrice", totalPrice);
-
-                            updateCommand.ExecuteNonQuery();
-                        }
-                    }
-                    else
-                    {
-                        // Insert a new record
-                        string insertQuery = "INSERT INTO ShoppingCart (ProductID, ProductName, UnitPrice, Username, Quantity, TotalPrice) " +
-                   "VALUES (@ProductID, @ProductName, @UnitPrice, @Username, @Quantity, @TotalPrice)";
-                        using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
-                        {
-                            insertCommand.Parameters.AddWithValue("@ProductID", productId);
-                            insertCommand.Parameters.AddWithValue("@ProductName", productName);
-                            insertCommand.Parameters.AddWithValue("@UnitPrice", price);
-                            insertCommand.Parameters.AddWithValue("@Username", Session["Username"]);
-                            insertCommand.Parameters.AddWithValue("@Quantity", quantity);
-                            insertCommand.Parameters.AddWithValue("@TotalPrice", totalPrice);
-
-                            insertCommand.ExecuteNonQuery();
-                        }
+                        cartQuantity = (int)reader["Quantity"];
                     }
                 }
             }
+
+            return cartQuantity;
         }
+
+
+        private int GetAvailableStock(string productId)
+        {
+            int availableStock = 0;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT Stock FROM Products WHERE ProductID = @ProductID";
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@ProductID", productId);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        availableStock = (int)reader["Stock"];
+                    }
+                }
+            }
+
+            return availableStock;
+        }
+
+        private bool IsProductInCart(string productId)
+        {
+            bool isInCart = false;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT COUNT(*) FROM ShoppingCart WHERE ProductID = @ProductID AND Username = @Username";
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@ProductID", productId);
+                    command.Parameters.AddWithValue("@Username", Session["Username"]);
+
+                    int itemCount = (int)command.ExecuteScalar();
+
+                    if (itemCount > 0)
+                    {
+                        isInCart = true;
+                    }
+                }
+            }
+
+            return isInCart;
+        }
+
+        private void UpdateCart(string productId, int newQuantity, double totalPrice)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Update the existing record
+                string updateQuery = "UPDATE ShoppingCart SET Quantity = @Quantity, TotalPrice = @TotalPrice WHERE ProductID = @ProductID AND Username = @Username";
+                using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
+                {
+                    updateCommand.Parameters.AddWithValue("@ProductID", productId);
+                    updateCommand.Parameters.AddWithValue("@Username", Session["Username"]);
+                    updateCommand.Parameters.AddWithValue("@Quantity", newQuantity);
+                    updateCommand.Parameters.AddWithValue("@TotalPrice", totalPrice);
+
+                    updateCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void InsertIntoCart(string productId, string productName, int quantity, double price, double totalPrice)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string insertQuery = "INSERT INTO ShoppingCart (ProductID, ProductName, UnitPrice, Username, Quantity, TotalPrice) VALUES (@ProductID, @ProductName, @UnitPrice, @Username, @Quantity, @TotalPrice)";
+
+                using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@ProductID", productId);
+                    command.Parameters.AddWithValue("@ProductName", productName);
+                    command.Parameters.AddWithValue("@UnitPrice", price);
+                    command.Parameters.AddWithValue("@Username", Session["Username"]);
+                    command.Parameters.AddWithValue("@Quantity", quantity);
+                    command.Parameters.AddWithValue("@TotalPrice", totalPrice);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
 
     }
 

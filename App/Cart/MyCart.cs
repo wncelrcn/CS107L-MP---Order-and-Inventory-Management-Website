@@ -13,5 +13,6 @@ namespace CS107L_MP.App.Cart
         public int Quantity { get; set; }
         public double Price { get; set; }
         public double TotalPrice { get; set; }
+        public int Stock { get; set; }
     }
 }

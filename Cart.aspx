@@ -94,12 +94,14 @@
                         <div class="item-details">
                             <p><strong><%# Eval("ProductName") %></strong></p>
                             <p>Quantity: <asp:TextBox ID="txtQuantity" CssClass="quantityTxtBox" runat="server" Text='<%# Eval("Quantity") %>' Enabled="False"></asp:TextBox></p>
-                            <p class ="lblPrice">Price per item: <%# Eval("Price", "{0:C}") %></p>
-                            <p class ="lblTotalPrice">Total Price: <%# Eval("TotalPrice", "{0:C}") %></p>
+                            
+                            
+                            <p class ="product-price">Price per item: <asp:Label ID="lblPrice" runat="server" Text= '<%# Eval("Price", "{0:C}") %>'></asp:Label> </p>
+                            <p class ="product-total-price">Total Price: <asp:Label ID="lblTotalPrice" runat="server" Text='<%# Eval("TotalPrice", "{0:C}") %>'></asp:Label> </p>
                         </div>
                         <div class="quantity-controls">
-                            <asp:Button ID="minusButton" CssClass="minus-button" runat="server" Text="-" OnClick="minusButton_Click" CommandArgument='<%# Eval("ProductID") + ";" + Eval("Quantity") + ";" + Eval("Price") %>' />
-                            <asp:Button ID="plusButton" CssClass="plus-button" runat="server" Text="+" OnClick ="plusButton_Click"  />
+                            <asp:Button ID="minusButton" CssClass="minus-button" runat="server" Text="-" OnClick="minusButton_Click" CommandArgument='<%# Eval("ProductID") + ";" + Eval("Quantity") + ";" + Eval("TotalPrice") %>' />
+                            <asp:Button ID="plusButton" CssClass="plus-button" runat="server" Text="+" OnClick ="plusButton_Click"  CommandArgument='<%# Eval("ProductID") + ";" + Eval("Quantity") + ";" + Eval("TotalPrice") + ";" + Eval("Stock") %>' />
                             <asp:Button ID="btnRemove" runat="server" Text="Remove" CssClass="remove-button" CommandArgument='<%# Eval("ProductId") %>' OnClick="RemoveFromCart_Click" />
                         </div>
                     </div>

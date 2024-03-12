@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Web.UI.WebControls;
 using CS107L_MP.App.Cart;
 
@@ -63,6 +64,7 @@ namespace CS107L_MP
                     cartItem.Price = Convert.ToDouble(reader["UnitPrice"]);
                     cartItem.Quantity = Convert.ToInt32(reader["Quantity"]);
                     cartItem.TotalPrice = Convert.ToDouble(reader["TotalPrice"]);
+                    cartItem.Stock = Convert.ToInt32(reader["Stock"]);
                     cartItems.Add(cartItem);
                 }
             }
@@ -119,23 +121,91 @@ namespace CS107L_MP
 
         protected void minusButton_Click(object sender, EventArgs e)
         {
-           
+            Button btn = (Button)sender;
+            string[] args = btn.CommandArgument.ToString().Split(';');
+            string productId = args[0];
+            int currentQuantity = int.Parse(args[1]);
+            decimal totalPrice = decimal.Parse(args[2]);
 
+            string username = Session["Username"] != null ? Session["Username"].ToString() : "";
 
+            if (!string.IsNullOrEmpty(username))
+            {
+                // Implement logic to reduce the quantity in the database
+                int newQuantity = Math.Max(1, currentQuantity - 1); // Ensure the quantity doesn't go below 1
+                decimal newTotalPrice = totalPrice / currentQuantity * newQuantity;
 
+                // Display information in alert
+                //string alertMessage = $"Product ID: {productId}, New Quantity: {newQuantity}, newTotalPrice: {newTotalPrice}";
+                //ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{alertMessage}');", true);
 
+                UpdateCartQuantity(productId, newQuantity, newTotalPrice, username);
 
+                // Reload the cart to reflect the changes
+                LoadCart();
+            }
+            else
+            {
+                // Redirect to login page or handle accordingly if user is not logged in
+                Response.Redirect("~/Login.aspx");
+            }
+
+            
         }
 
         protected void plusButton_Click(object sender, EventArgs e)
         {
-              
+            Button btn = (Button)sender;
+            string[] args = btn.CommandArgument.ToString().Split(';');
+            string productId = args[0];
+            int currentQuantity = int.Parse(args[1]);
+            decimal totalPrice = decimal.Parse(args[2]);
+            int stock = int.Parse(args[3]);
+
+            string username = Session["Username"] != null ? Session["Username"].ToString() : "";
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                int newQuantity = Math.Min(currentQuantity + 1, stock); // Ensure the quantity doesn't exceed stock
+                decimal newTotalPrice = totalPrice / currentQuantity * newQuantity;
+
+                // Display information in alert
+                //string alertMessage = $"Product ID: {productId}, New Quantity: {newQuantity}, newTotalPrice: {newTotalPrice}";
+                //ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('{alertMessage}');", true);
 
 
+                UpdateCartQuantity(productId, newQuantity, newTotalPrice, username);
+
+                // Reload the cart to reflect the changes
+                LoadCart();
+            }
+            else
+            {
+                // Redirect to login page or handle accordingly if user is not logged in
+                Response.Redirect("~/Login.aspx");
+            }
+        }
 
 
+        private void UpdateCartQuantity(string productId, int newQuantity, decimal newTotalPrice, string username)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
 
+                string updateQuery = "UPDATE ShoppingCart SET Quantity = @Quantity, TotalPrice = @TotalPrice WHERE Username = @Username AND ProductId = @ProductId";
+
+                using (SqlCommand command = new SqlCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@Quantity", newQuantity);
+                    command.Parameters.AddWithValue("@TotalPrice", newTotalPrice);
+                    command.Parameters.AddWithValue("@ProductID", productId);
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
