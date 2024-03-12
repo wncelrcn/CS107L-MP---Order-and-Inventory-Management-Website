@@ -107,6 +107,10 @@
                     </div>
                 </ItemTemplate>
              </asp:Repeater>
+            <div class="total-cart-container">
+                <asp:Label ID="lblTotalCartPrice" runat="server" Text=""></asp:Label>
+                <asp:Button ID="btnCheckout" runat="server" Text="Checkout" CssClass="checkout-button" OnClick="btnCheckout_Click" />
+            </div>
         </div>
     </form>
 

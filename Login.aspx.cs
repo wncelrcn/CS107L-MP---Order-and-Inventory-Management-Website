@@ -25,35 +25,48 @@ namespace CS107L_MP
 
                 try
                 {
-                    // Establish connection to the SQL database
-                    string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    // Check if the username and password combination is valid
+                    if (username.ToLower() == "admin" && password == "password")
                     {
-                        connection.Open();
+                        // Authentication successful for admin
+                        // Set the session variable for the username
+                        Session["Username"] = username;
 
-                        // Check if the username and password combination exists in AuthUsers table
-                        string query = "SELECT COUNT(*) FROM AuthUsers WHERE username = @username AND password = @password";
-                        SqlCommand command = new SqlCommand(query, connection);
-                        command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@password", password);
-                        int count = (int)command.ExecuteScalar();
-
-                        if (count > 0)
+                        // Redirect to the Admin.aspx page for admin users
+                        Response.Redirect("Admin.aspx");
+                    }
+                    else
+                    {
+                        // Establish connection to the SQL database
+                        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                        using (SqlConnection connection = new SqlConnection(connectionString))
                         {
-                            // Authentication successful
-                            // Set the session variable for the username
-                            Session["Username"] = username;
+                            connection.Open();
 
-                            // Redirect to the Order.aspx page
-                            Response.Redirect("Order.aspx");
-                        }
-                        else
-                        {
-                            // Authentication failed
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid username or password.');", true);
-                        }
+                            // Check if the username and password combination exists in AuthUsers table
+                            string query = "SELECT COUNT(*) FROM AuthUsers WHERE username = @username AND password = @password";
+                            SqlCommand command = new SqlCommand(query, connection);
+                            command.Parameters.AddWithValue("@username", username);
+                            command.Parameters.AddWithValue("@password", password);
+                            int count = (int)command.ExecuteScalar();
 
-                        connection.Close();
+                            if (count > 0)
+                            {
+                                // Authentication successful for regular users
+                                // Set the session variable for the username
+                                Session["Username"] = username;
+
+                                // Redirect to the Order.aspx page
+                                Response.Redirect("Order.aspx");
+                            }
+                            else
+                            {
+                                // Authentication failed
+                                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid username or password.');", true);
+                            }
+
+                            connection.Close();
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -67,6 +80,8 @@ namespace CS107L_MP
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please check your Inputs.');", true);
             }
         }
+
+
 
     }
 }
