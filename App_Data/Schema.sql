@@ -81,8 +81,6 @@ INSERT INTO Products (ProductID, ProductName, Price, Stock, Category) VALUES
 
 
 --for ShoppingCart Table
-DROP TABLE IF EXISTS ShoppingCart
-
 CREATE TABLE ShoppingCart (
     ProductID INT, 
     ProductName NVARCHAR (255),
@@ -91,3 +89,19 @@ CREATE TABLE ShoppingCart (
     Quantity INT,
     TotalPrice DECIMAL (18, 2) 
 );
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY IDENTITY(1,1),
+    Username VARCHAR(100) NOT NULL,
+    ProductName NVARCHAR(255),
+    Quantity INT,
+    UnitPrice DECIMAL(18, 2),
+    TotalPrice DECIMAL(18, 2),
+    OrderDate DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Orders_Users FOREIGN KEY (Username) REFERENCES Users(username)
+);
+
+
+
+
+
