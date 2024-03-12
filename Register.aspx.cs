@@ -17,7 +17,6 @@ namespace CS107L_MP
 
         protected void regBtn_Click(object sender, EventArgs e)
         {
-
             if (Page.IsValid)
             {
                 // Retrieve user input from the registration form
@@ -28,12 +27,23 @@ namespace CS107L_MP
                 string username = usernameTxtBox.Text;
                 string password = passTxtBox.Text;
 
-                //string script = $"alert('Successfully Registered! \\nUsername: {usernameTxtBox.Text}, Password: {passTxtBox.Text}');";
-                //ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
-                
-
                 try
                 {
+                    // Check if the username is "admin"
+                    if (username.ToLower() == "admin")
+                    {
+                        // Display alert using ScriptManager to avoid interference with validation controls
+                        if (ScriptManager.GetCurrent(this.Page) != null)
+                        {
+                            ScriptManager.RegisterStartupScript(this, GetType(), "adminAlert", "alert('Username cannot be 'admin'. Please choose another username.');", true);
+                        }
+                        else
+                        {
+                            // Fallback if ScriptManager is not available
+                            Response.Write("<script>alert('Username cannot be 'admin'. Please choose another username.');</script>");
+                        }
+                        return; // Exit the method, preventing further registration steps
+                    }
 
                     string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                     using (SqlConnection connection = new SqlConnection(connectionString))
@@ -49,7 +59,8 @@ namespace CS107L_MP
                         if (usernameCount > 0)
                         {
                             // Username already exists, show alert and return
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Username already exists! Please choose a different username.');", true);
+                            ScriptManager.RegisterStartupScript(this, GetType(), "usernameExistsAlert", "alert('Username already exists! Please choose a different username.');", true);
+                            connection.Close();
                             return;
                         }
 
@@ -62,37 +73,28 @@ namespace CS107L_MP
                         usersCommand.Parameters.AddWithValue("@address", address);
                         int usersRowsAffected = usersCommand.ExecuteNonQuery();
 
-
                         string authUsersQuery = "INSERT INTO AuthUsers (username, password) VALUES (@username, @password)";
                         SqlCommand authUsersCommand = new SqlCommand(authUsersQuery, connection);
                         authUsersCommand.Parameters.AddWithValue("@username", username);
                         authUsersCommand.Parameters.AddWithValue("@password", password);
                         int authUsersRowsAffected = authUsersCommand.ExecuteNonQuery();
 
-
                         connection.Close();
-
-                        
                     }
 
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Registration successful!');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "registrationSuccessAlert", "alert('Registration successful!');", true);
                     Response.Redirect("Login.aspx");
                 }
                 catch (Exception ex)
                 {
                     // Handle exceptions
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Registration failed: " + ex.Message + "');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "registrationErrorAlert", $"alert('Registration failed: {ex.Message}');", true);
                 }
             }
             else
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please check your Inputs.');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "validationErrorAlert", "alert('Please check your Inputs.');", true);
             }
-
-
-            
-
-
         }
     }
 }

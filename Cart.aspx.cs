@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.UI.WebControls;
 using CS107L_MP.App.Cart;
 
@@ -31,12 +32,24 @@ namespace CS107L_MP
                 // Bind cart items to the repeater
                 ItemRepeater.DataSource = cartItems;
                 ItemRepeater.DataBind();
+
+                // Calculate and display the total price of all items in the cart
+                double totalCartPrice = cartItems.Sum(item => item.TotalPrice);
+                lblTotalCartPrice.Text = $"Total Cart Price: {totalCartPrice:C}";
             }
             else
             {
-                // Redirect to login page or handle accordingly if user is not logged in
+                // Redirect to login page or handle accordingly if the user is not logged in
                 Response.Redirect("~/Login.aspx");
             }
+        }
+
+        // method for checkout
+        protected void btnCheckout_Click(object sender, EventArgs e)
+        {
+            // Implement logic for checkout
+            // You can redirect to a checkout page or perform additional actions here
+            Response.Redirect("~/Checkout.aspx");
         }
 
         // Method to fetch cart items for a specific user from the database
