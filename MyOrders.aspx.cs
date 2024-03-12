@@ -45,7 +45,7 @@ namespace CS107L_MP
 
             // Connect to the database and retrieve order items for the specific user
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            string query = "SELECT ProductName, Quantity, UnitPrice, TotalPrice, OrderDate, Status FROM Orders WHERE Username = @Username";
+            string query = "SELECT ProductName, Quantity, UnitPrice, TotalPrice, OrderDate FROM Orders WHERE Username = @Username";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
