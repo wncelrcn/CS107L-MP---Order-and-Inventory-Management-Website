@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrderNav.Master" AutoEventWireup="true" CodeBehind="MyOrders.aspx.cs" Inherits="CS107L_MP.MyOrders" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
+      <style>
          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
          body {
@@ -54,15 +54,14 @@
             <ItemTemplate>
                 <div class="order-item">
                     <div class="item-details">
+                        <p>Transaction ID: <asp:Label ID="lblTransactionID" runat="server" Text='<%# Eval("TransactionID") %>'></asp:Label></p>
                         <p><strong><%# Eval("ProductName") %></strong></p>
                         <p>Quantity: <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>'></asp:Label></p>
-                        <p>Price per item: <asp:Label ID="lblPrice" runat="server" Text='<%# Eval("Price", "{0:C}") %>'></asp:Label></p>
-                        <p>Total Price: <asp:Label ID="lblTotalPrice" runat="server" Text='<%# Eval("TotalPrice", "{0:C}") %>'></asp:Label></p>
-                        
+                        <p>Total Price: <asp:Label ID="lblTotalPrice" runat="server" Text='<%# Eval("TotalPrice", "{0:C}") %>'></asp:Label></p>                      
                     </div>
                     <div class="order-date">
                         <p>Date Ordered: <%# Eval("OrderDate", "{0:MMMM dd, yyyy}") %></p>
-                        <p>Status: Order placed</p>
+                        <p>Status: <asp:Label ID="lblStatus" runat="server" Text='<%# Eval("Status") %>'></asp:Label></p>
                     </div>
                 </div>
             </ItemTemplate>

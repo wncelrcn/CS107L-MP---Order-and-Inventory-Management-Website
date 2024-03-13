@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using System.Web.UI.WebControls;
+
 
 namespace CS107L_MP
 {
@@ -45,7 +43,7 @@ namespace CS107L_MP
 
             // Connect to the database and retrieve order items for the specific user
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            string query = "SELECT ProductName, Quantity, UnitPrice, TotalPrice, OrderDate FROM Orders WHERE Username = @Username";
+            string query = "SELECT TransactionID, ProductName, Quantity, TotalOrderPrice, OrderDate, OrderStatus FROM Orders WHERE Username = @Username";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -57,11 +55,12 @@ namespace CS107L_MP
                 while (reader.Read())
                 {
                     MyOrderItem orderItem = new MyOrderItem();
+                    orderItem.TransactionID = reader["TransactionID"].ToString();
                     orderItem.ProductName = reader["ProductName"].ToString();
                     orderItem.Quantity = Convert.ToInt32(reader["Quantity"]);
-                    orderItem.Price = Convert.ToDouble(reader["UnitPrice"]);
-                    orderItem.TotalPrice = Convert.ToDouble(reader["TotalPrice"]);
-                    orderItem.OrderDate = Convert.ToDateTime(reader["OrderDate"]); // Add this line           
+                    orderItem.TotalPrice = Convert.ToDouble(reader["TotalOrderPrice"]);
+                    orderItem.OrderDate = Convert.ToDateTime(reader["OrderDate"]);
+                    orderItem.Status = reader["OrderStatus"].ToString();
                     orderItems.Add(orderItem);
                 }
             }
@@ -71,12 +70,15 @@ namespace CS107L_MP
 
         public class MyOrderItem
         {
+            public string TransactionID { get; set; }
             public string ProductName { get; set; }
             public int Quantity { get; set; }
             public double Price { get; set; }
             public double TotalPrice { get; set; }
-            public DateTime OrderDate { get; internal set; }
-            public int ProductID { get; set; }
+            public DateTime OrderDate { get; set; }
+            public string Status { get; set; }
         }
     }
 }
+
+
