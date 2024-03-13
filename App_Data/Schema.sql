@@ -91,3 +91,20 @@ CREATE TABLE ShoppingCart (
     Quantity INT,
     TotalPrice DECIMAL (18, 2) 
 );
+
+
+-- Drop table if exists
+DROP TABLE IF EXISTS Orders;
+
+-- Create Orders table
+CREATE TABLE Orders (
+    OrderNum INT IDENTITY(1,1) PRIMARY KEY,
+    TransactionID VARCHAR(100),
+    Username VARCHAR(100),
+    ProductName NVARCHAR(255),
+    Quantity INT,
+    OrderDate DATE DEFAULT CONVERT(DATE, GETDATE()),
+    TotalOrderPrice DECIMAL(18, 2),
+    OrderStatus VARCHAR(50),
+    CONSTRAINT FK_Orders_Users FOREIGN KEY (Username) REFERENCES Users (Username)
+);

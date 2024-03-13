@@ -84,6 +84,37 @@
             background-color: #f44336;
         }
 
+        .total-cart-container {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-cart-container .checkout-button {
+            padding: 10px 20px;
+            background-color: #009688;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .total-cart-container .checkout-button:hover {
+            background-color: #00796b;
+        }
+
+        .total-cart-container label {
+            font-size: 18px;
+        }
+
+
     </style>
     <h1><%:Session["Username"]%>'s Cart</h1>
     <form id="Form1" runat="server">

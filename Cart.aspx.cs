@@ -35,7 +35,7 @@ namespace CS107L_MP
 
                 // Calculate and display the total price of all items in the cart
                 double totalCartPrice = cartItems.Sum(item => item.TotalPrice);
-                lblTotalCartPrice.Text = $"Total Cart Price: {totalCartPrice:C}";
+                lblTotalCartPrice.Text = $"Total Checkout Price: {totalCartPrice:C} ";
             }
             else
             {
@@ -44,13 +44,7 @@ namespace CS107L_MP
             }
         }
 
-        // method for checkout
-        protected void btnCheckout_Click(object sender, EventArgs e)
-        {
-            // Implement logic for checkout
-            // You can redirect to a checkout page or perform additional actions here
-            Response.Redirect("~/Checkout.aspx");
-        }
+        
 
         // Method to fetch cart items for a specific user from the database
         private IEnumerable<MyCart> GetCartItems(string username)
@@ -220,5 +214,99 @@ namespace CS107L_MP
                 }
             }
         }
+
+
+        protected void btnCheckout_Click(object sender, EventArgs e)
+        {
+            // Get the currently logged-in username
+            string username = Session["Username"] != null ? Session["Username"].ToString() : "";
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                // Generate a unique TransactionID for the current checkout
+                string transactionID = Guid.NewGuid().ToString();
+
+                // Get cart items for the specific user
+                IEnumerable<MyCart> cartItems = GetCartItems(username);
+
+                // Establish connection
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Insert cart items into the Orders table
+                    InsertOrderItems(cartItems, transactionID, username, connection);
+
+                    // Remove cart items from the ShoppingCart table
+                    ClearCart(username);
+                }
+
+                // Redirect to the order summary page
+                Response.Redirect("~/MyOrders.aspx");
+            }
+            else
+            {
+                // Redirect to login page or handle accordingly if user is not logged in
+                Response.Redirect("~/Login.aspx");
+            }
+        }
+
+        // Method to insert cart items into the Orders table
+        private void InsertOrderItems(IEnumerable<MyCart> cartItems, string transactionID, string username, SqlConnection connection)
+        {
+            foreach (var item in cartItems)
+            {
+                string insertQuery = @"INSERT INTO Orders (TransactionID, Username, ProductName, Quantity, TotalOrderPrice, OrderStatus)
+                               VALUES (@TransactionID, @Username, @ProductName, @Quantity, @TotalOrderPrice, @OrderStatus)";
+
+                using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@TransactionID", transactionID);
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@ProductName", item.ProductName);
+                    command.Parameters.AddWithValue("@Quantity", item.Quantity);
+                    command.Parameters.AddWithValue("@TotalOrderPrice", item.TotalPrice);
+                    command.Parameters.AddWithValue("@OrderStatus", "Order Placed"); // You can set the initial order status here
+                    command.ExecuteNonQuery();
+                }
+
+                // Update product stock after each successful order
+                UpdateProductStock(connection, item.ProductId, item.Quantity);
+            }
+        }
+
+        // Method to update product stock after successful order
+        private void UpdateProductStock(SqlConnection connection, string productId, int quantity)
+        {
+            string updateStockQuery = "UPDATE Products SET Stock = Stock - @Quantity WHERE ProductID = @ProductID";
+            using (SqlCommand updateStockCommand = new SqlCommand(updateStockQuery, connection))
+            {
+                updateStockCommand.Parameters.AddWithValue("@Quantity", quantity);
+                updateStockCommand.Parameters.AddWithValue("@ProductID", productId);
+                updateStockCommand.ExecuteNonQuery();
+            }
+        }
+
+
+        // Method to remove cart items from the ShoppingCart table
+        private void ClearCart(string username)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string deleteQuery = "DELETE FROM ShoppingCart WHERE Username = @Username";
+
+                using (SqlCommand command = new SqlCommand(deleteQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
