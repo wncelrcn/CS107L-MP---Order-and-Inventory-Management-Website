@@ -1,0 +1,69 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminNavBar.master.cs" Inherits="CS107L_MP.AdminNavBar" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #333;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .navbar a:hover {
+            background-color: #555;
+        }
+
+        .navbar a.logo img {
+            height: 40px;
+        }
+
+        .navbar .right-links {
+            margin-left: auto;
+        }
+
+        /* Adjust styles for login and register links */
+        .navbar .right-links a {
+            margin-left: 10px; /* Add some space between links */
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="navbar">
+        <a href="#" class="logo"><img src="#" alt="Logo"></a>
+        <div class ="right-links">
+            <a href="ManageOrders.aspx">Manage Orders</a>
+            <a href="ManageInventory.aspx">Manage Inventory</a>
+            <a href="ViewSales.aspx">View Sales</a>
+            <!-- Add more links as needed -->
+            <a href="Home.aspx">Logout</a>
+        </div>
+    </div>
+
+    <div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    
+</body>
+</html>
