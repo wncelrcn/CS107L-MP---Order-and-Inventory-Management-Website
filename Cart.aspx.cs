@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using CS107L_MP.App.Cart;
 
@@ -44,7 +45,6 @@ namespace CS107L_MP
             }
         }
 
-        
 
         // Method to fetch cart items for a specific user from the database
         private IEnumerable<MyCart> GetCartItems(string username)
@@ -78,11 +78,6 @@ namespace CS107L_MP
 
             return cartItems;
         }
-
-
-
-
-
 
         // Event handler for removing items from the cart
         protected void RemoveFromCart_Click(object sender, EventArgs e)
@@ -156,8 +151,6 @@ namespace CS107L_MP
                 // Redirect to login page or handle accordingly if user is not logged in
                 Response.Redirect("~/Login.aspx");
             }
-
-            
         }
 
         protected void plusButton_Click(object sender, EventArgs e)
@@ -223,6 +216,14 @@ namespace CS107L_MP
 
             if (!string.IsNullOrEmpty(username))
             {
+                // Check if the cart is empty
+                if (IsCartEmpty(username))
+                {
+                    // Display an alert indicating that the user doesn't have any items in the cart
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showAlert", "alert('You don\'t have any items in your cart!');", true);
+                    return;
+                }
+
                 // Generate a unique TransactionID for the current checkout
                 string transactionID = Guid.NewGuid().ToString();
 
@@ -249,6 +250,23 @@ namespace CS107L_MP
             {
                 // Redirect to login page or handle accordingly if user is not logged in
                 Response.Redirect("~/Login.aspx");
+            }
+        }
+
+        // Method to check if the cart is empty
+        private bool IsCartEmpty(string username)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            string query = "SELECT COUNT(*) FROM ShoppingCart WHERE Username = @Username";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Username", username);
+                connection.Open();
+                int cartItemCount = (int)command.ExecuteScalar();
+
+                return cartItemCount == 0;
             }
         }
 

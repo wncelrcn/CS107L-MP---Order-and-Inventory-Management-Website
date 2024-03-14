@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrderNav.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="CS107L_MP.Cart" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+   
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -7,14 +8,14 @@
         body {
             font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
         }
-         h1 {
-             font-size: 36px;
-             color: #333;
-             margin-bottom: 30px;
-             text-align: left;
-             margin-left: 5.5rem;
-     
-         }
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: left;
+            margin-left: 5.5rem;
+        }
+
         .cart-container {
             width: 80%;
             margin: 0 auto;
@@ -43,7 +44,7 @@
 
         .quantityTxtBox {
             font-size: 18px;
-            width:60px;
+            width: 60px;
         }
 
         .quantity-controls button {
@@ -113,11 +114,12 @@
         .total-cart-container label {
             font-size: 18px;
         }
-
-
     </style>
-    <h1><%:Session["Username"]%>'s Cart</h1>
+
     <form id="Form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
+        <h1><%:Session["Username"]%>'s Cart</h1>
         <div class="cart-container">
             <asp:Repeater ID="ItemRepeater" runat="server">
                 <ItemTemplate>
@@ -125,9 +127,7 @@
                         <div class="item-details">
                             <p><strong><%# Eval("ProductName") %></strong></p>
                             <p>Quantity: <asp:TextBox ID="txtQuantity" CssClass="quantityTxtBox" runat="server" Text='<%# Eval("Quantity") %>' Enabled="False"></asp:TextBox></p>
-                            
-                            
-                            <p class ="product-price">Price per item: <asp:Label ID="lblPrice" runat="server" Text= '<%# Eval("Price", "{0:C}") %>'></asp:Label> </p>
+                            <p class ="product-price">Price per item: <asp:Label ID="lblPrice" runat="server" Text='<%# Eval("Price", "{0:C}") %>'></asp:Label> </p>
                             <p class ="product-total-price">Total Price: <asp:Label ID="lblTotalPrice" runat="server" Text='<%# Eval("TotalPrice", "{0:C}") %>'></asp:Label> </p>
                         </div>
                         <div class="quantity-controls">
@@ -144,6 +144,4 @@
             </div>
         </div>
     </form>
-
-    
 </asp:Content>
