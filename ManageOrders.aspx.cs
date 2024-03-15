@@ -196,11 +196,26 @@ namespace CS107L_MP
             RepeaterItem item = (RepeaterItem)btnUpdateStatus.NamingContainer;
             DropDownList ddlStatus = (DropDownList)item.FindControl("ddlStatus");
             Label lblTransactionID = (Label)item.FindControl("lblTransactionID");
-            Label lblCurrentStatus = (Label)item.FindControl("lblCurrentStatus"); // Added
+            Label lblCurrentStatus = (Label)item.FindControl("lblCurrentStatus");
+
+            // Get the current selected status filter from the dropdown
+            string currentFilter = ddlOrderStatus.SelectedValue;
 
             UpdateOrderStatus(lblTransactionID.Text, ddlStatus.SelectedValue);
-            lblCurrentStatus.Text = ddlStatus.SelectedValue; // Added
-            LoadOrdersWithSelectedStatus(ddlOrderStatus.SelectedValue); // Modified to load orders with selected status from ddlOrderStatus
+            lblCurrentStatus.Text = ddlStatus.SelectedValue;
+
+            // Reapply the current filter selection after updating the status
+            ddlOrderStatus.SelectedValue = currentFilter;
+
+            // Reload orders based on the current filter selection
+            if (string.IsNullOrEmpty(currentFilter))
+            {
+                LoadOrders();
+            }
+            else
+            {
+                LoadOrdersWithSelectedStatus(currentFilter);
+            }
         }
 
         private void UpdateOrderStatus(string transactionID, string newStatus)
