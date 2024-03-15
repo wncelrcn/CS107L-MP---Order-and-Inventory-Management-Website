@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.UI.WebControls;
-
+using CS107L_MP.App.Orders;
 
 namespace CS107L_MP
 {
@@ -44,7 +44,7 @@ namespace CS107L_MP
 
             // Connect to the database and retrieve order items for the specific user
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            string query = "SELECT TransactionID, ProductName, Quantity, TotalOrderPrice, OrderDate, OrderStatus FROM Orders WHERE Username = @Username";
+            string query = "SELECT TransactionID, ProductName, Quantity, TotalOrderPrice, OrderDate, OrderStatus FROM Orders WHERE Username = @Username ORDER BY OrderDate DESC"; // Order by OrderDate in descending order
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -85,6 +85,7 @@ namespace CS107L_MP
         }
 
 
+
         protected void OrderRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -98,28 +99,6 @@ namespace CS107L_MP
                 ProductRepeater.DataBind();
             }
         }
-
-
-        public class MyOrderItem
-        {
-            public string TransactionID { get; set; }
-            public List<OrderProduct> Products { get; set; }
-            public double TotalPrice { get; set; }
-            public DateTime OrderDate { get; set; }
-            public string Status { get; set; }
-
-            public MyOrderItem()
-            {
-                Products = new List<OrderProduct>();
-            }
-        }
-
-        public class OrderProduct
-        {
-            public string ProductName { get; set; }
-            public int Quantity { get; set; }
-        }
-
     }
 }
 

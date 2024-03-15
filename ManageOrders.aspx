@@ -74,11 +74,37 @@
             border-radius: 4px;
 
         }
+
+        .order-sort {
+            margin-bottom: 20px;
+        }
+
+        .order-sort label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .order-sort select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
     </style>
 
     <div class="container">
         <h1>Manage Orders</h1>
         <form id="form1" runat="server">
+             <div class="order-sort">
+                <asp:Label ID="lblSortBy" runat="server" AssociatedControlID="ddlOrderStatus">Sort by Status:</asp:Label>
+                <asp:DropDownList ID="ddlOrderStatus" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlOrderStatus_SelectedIndexChanged">
+                    <asp:ListItem Text="All Orders" Value=""></asp:ListItem>
+                    <asp:ListItem Text="Order Placed" Value="Order Placed"></asp:ListItem>
+                    <asp:ListItem Text="Preparing to Ship" Value="Preparing to Ship"></asp:ListItem>
+                    <asp:ListItem Text="In Transit" Value="In Transit"></asp:ListItem>
+                    <asp:ListItem Text="Delivered" Value="Delivered"></asp:ListItem>
+                </asp:DropDownList>
+            </div>
             <asp:Repeater ID="OrderRepeater" runat="server" OnItemDataBound="OrderRepeater_ItemDataBound">
                 <ItemTemplate>
                     <div class="order-container">
@@ -100,8 +126,8 @@
                             <div class="order-status">
                                 <asp:DropDownList ID="ddlStatus" runat="server">
                                     <asp:ListItem Text="Order Placed" Value="Order Placed"></asp:ListItem>
-                                    <asp:ListItem Text="In Transit" Value="In Transit"></asp:ListItem>
                                     <asp:ListItem Text="Preparing to Ship" Value="Preparing to Ship"></asp:ListItem>
+                                    <asp:ListItem Text="In Transit" Value="In Transit"></asp:ListItem>
                                     <asp:ListItem Text="Delivered" Value="Delivered"></asp:ListItem>
                                 </asp:DropDownList>
                                 <asp:Button ID="btnUpdateStatus" runat="server" CssClass="btnUpdateStatus" Text="Update Status" OnClick="btnUpdateStatus_Click" />
