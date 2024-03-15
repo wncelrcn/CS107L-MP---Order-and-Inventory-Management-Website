@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.UI.WebControls;
+using CS107L_MP.App.ManageOrders;
 
 namespace CS107L_MP
 {
@@ -179,9 +180,6 @@ namespace CS107L_MP
             return orderItems;
         }
 
-
-
-
         protected void ddlStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             DropDownList ddlStatus = (DropDownList)sender;
@@ -219,26 +217,5 @@ namespace CS107L_MP
                 command.ExecuteNonQuery();
             }
         }
-    }
-
-    public class MyOrderItem
-    {
-        public string TransactionID { get; set; }
-        public string Username { get; set; }
-        public List<OrderProduct> Products { get; set; }
-        public double TotalPrice { get; set; }
-        public DateTime OrderDate { get; set; }
-        public string Status { get; set; }
-
-        public MyOrderItem()
-        {
-            Products = new List<OrderProduct>();
-        }
-    }
-
-    public class OrderProduct
-    {
-        public string ProductName { get; set; }
-        public int Quantity { get; set; }
     }
 }

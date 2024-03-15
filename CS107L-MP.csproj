@@ -101,6 +101,7 @@
       <DependentUpon>Admin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App\Cart\MyCart.cs" />
+    <Compile Include="App\ManageOrders\MyOrderItem.cs" />
     <Compile Include="App\Orders\Orders.cs" />
     <Compile Include="App\Products\Products.cs" />
     <Compile Include="Cart.aspx.cs">

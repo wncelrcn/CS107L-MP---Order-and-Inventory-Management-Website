@@ -25,7 +25,7 @@ namespace CS107L_MP
             if (!string.IsNullOrEmpty(username))
             {
                 // Get orders for the specific user
-                IEnumerable<MyOrderItem> orderItems = GetOrderItems(username);
+                IEnumerable<Orders> orderItems = GetOrderItems(username);
 
                 // Bind order items to the repeater
                 OrderRepeater.DataSource = orderItems;
@@ -38,9 +38,9 @@ namespace CS107L_MP
             }
         }
 
-        private IEnumerable<MyOrderItem> GetOrderItems(string username)
+        private IEnumerable<Orders> GetOrderItems(string username)
         {
-            List<MyOrderItem> orderItems = new List<MyOrderItem>();
+            List<Orders> orderItems = new List<Orders>();
 
             // Connect to the database and retrieve order items for the specific user
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -58,12 +58,12 @@ namespace CS107L_MP
                     string transactionID = reader["TransactionID"].ToString();
 
                     // Check if the order item already exists in the list
-                    MyOrderItem orderItem = orderItems.FirstOrDefault(item => item.TransactionID == transactionID);
+                    Orders orderItem = orderItems.FirstOrDefault(item => item.TransactionID == transactionID);
 
                     // If the order item doesn't exist, create a new one and add it to the list
                     if (orderItem == null)
                     {
-                        orderItem = new MyOrderItem();
+                        orderItem = new Orders();
                         orderItem.TransactionID = transactionID;
                         orderItem.OrderDate = Convert.ToDateTime(reader["OrderDate"]);
                         orderItem.Status = reader["OrderStatus"].ToString();
@@ -94,7 +94,7 @@ namespace CS107L_MP
                 Repeater ProductRepeater = (Repeater)e.Item.FindControl("ProductRepeater");
 
                 // Bind product details to the inner repeater
-                MyOrderItem orderItem = (MyOrderItem)e.Item.DataItem;
+                Orders orderItem = (Orders)e.Item.DataItem;
                 ProductRepeater.DataSource = orderItem.Products;
                 ProductRepeater.DataBind();
             }
