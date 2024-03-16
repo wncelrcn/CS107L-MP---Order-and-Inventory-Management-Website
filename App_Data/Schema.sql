@@ -1,32 +1,41 @@
+-- Drop tables if they exist
 DROP TABLE IF EXISTS AuthUsers;
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS ShoppingCart;
+DROP TABLE IF EXISTS Orders;
 
 
-
-CREATE TABLE Users(
-	username VARCHAR(100) NOT NULL PRIMARY KEY,
-	FirstName NVARCHAR(50),
-    LastName NVARCHAR(50),
-    ContactNumber NVARCHAR(20),
-    Address NVARCHAR(255),
+-- Create Users table
+CREATE TABLE Users (
+    Username VARCHAR(100) NOT NULL PRIMARY KEY,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    ContactNumber NVARCHAR(20) NOT NULL,
+    Address NVARCHAR(255) NOT NULL,
+    CONSTRAINT CHK_ContactNumber CHECK (LEN(ContactNumber) = 10), -- Check contact number length
+    CONSTRAINT CHK_Address CHECK (LEN(Address) > 0) -- Check address is not empty
 );
 
-CREATE TABLE AuthUsers(
-	username VARCHAR(100) NOT NULL,
-	password VARCHAR(100) NOT NULL,
-	FOREIGN KEY (username) REFERENCES Users(username)
+
+-- Create AuthUsers table
+CREATE TABLE AuthUsers (
+    Username VARCHAR(100) NOT NULL PRIMARY KEY,
+    Password VARCHAR(100) NOT NULL,
+    FOREIGN KEY (Username) REFERENCES Users(username)
 );
 
 
---for Products Table
-DROP TABLE IF EXISTS Products
 
+-- Create Products table
 CREATE TABLE Products (
-    ProductID INT PRIMARY KEY,
-    ProductName VARCHAR(100),
-    Price DECIMAL(10, 2),
-    Stock INT,
-    Category VARCHAR(50)
+    ProductID INT NOT NULL PRIMARY KEY,
+    ProductName VARCHAR(100) NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL,
+    Stock INT NOT NULL,
+    Category VARCHAR(50) NOT NULL,
+    CONSTRAINT CHK_Price CHECK (Price >= 0), -- Check price is non-negative
+    CONSTRAINT CHK_Stock CHECK (Stock >= 0) -- Check stock is non-negative
 );
 
 INSERT INTO Products (ProductID, ProductName, Price, Stock, Category) VALUES
@@ -80,31 +89,35 @@ INSERT INTO Products (ProductID, ProductName, Price, Stock, Category) VALUES
 (48, 'TAKE OUT PLASTIC DOUBLE 100PCS', 200.00, 53, 'Misc');
 
 
---for ShoppingCart Table
-DROP TABLE IF EXISTS ShoppingCart
-
+-- Create ShoppingCart table
 CREATE TABLE ShoppingCart (
-    ProductID INT, 
-    ProductName NVARCHAR (255),
-    UnitPrice DECIMAL (18, 2),
-    Username VARCHAR (100),
-    Quantity INT,
-    TotalPrice DECIMAL (18, 2) 
+    ShoppingCartID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    ProductID INT NOT NULL,
+    ProductName NVARCHAR(255) NOT NULL,
+    UnitPrice DECIMAL(18, 2) NOT NULL,
+    Username VARCHAR(100) NOT NULL,
+    Quantity INT NOT NULL,
+    TotalPrice DECIMAL(18, 2) NOT NULL,
+    CONSTRAINT CHK_Quantity CHECK (Quantity > 0), -- Check quantity is positive
+    CONSTRAINT CHK_TotalPrice CHECK (TotalPrice >= 0), -- Check total price is non-negative
+    FOREIGN KEY (Username) REFERENCES Users(Username),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
-
 
 -- Drop table if exists
 DROP TABLE IF EXISTS Orders;
 
 -- Create Orders table
 CREATE TABLE Orders (
-    OrderNum INT IDENTITY(1,1) PRIMARY KEY,
-    TransactionID VARCHAR(100),
-    Username VARCHAR(100),
-    ProductName NVARCHAR(255),
-    Quantity INT,
-    OrderDate DATE DEFAULT CONVERT(DATE, GETDATE()),
-    TotalOrderPrice DECIMAL(18, 2),
-    OrderStatus VARCHAR(50),
+    OrderNum INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    TransactionID VARCHAR(100) NOT NULL,
+    Username VARCHAR(100) NOT NULL,
+    ProductName NVARCHAR(255) NOT NULL,
+    Quantity INT NOT NULL,
+    OrderDate DATE DEFAULT GETDATE() NOT NULL,
+    TotalOrderPrice DECIMAL(18, 2) NOT NULL,
+    OrderStatus VARCHAR(50) NOT NULL,
+    CONSTRAINT CHK_Quantity_Order CHECK (Quantity > 0), -- Check quantity is positive
+    CONSTRAINT CHK_TotalOrderPrice CHECK (TotalOrderPrice >= 0), -- Check total order price is non-negative
     CONSTRAINT FK_Orders_Users FOREIGN KEY (Username) REFERENCES Users (Username)
 );

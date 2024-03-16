@@ -104,6 +104,7 @@
     <Compile Include="App\ManageOrders\MyOrderItem.cs" />
     <Compile Include="App\Orders\Orders.cs" />
     <Compile Include="App\Products\Products.cs" />
+    <Compile Include="App\Sales\SalesSummary.cs" />
     <Compile Include="Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
