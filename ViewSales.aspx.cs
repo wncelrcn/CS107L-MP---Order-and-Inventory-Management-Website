@@ -18,26 +18,65 @@ namespace CS107L_MP
                 LoadSales();
             }
         }
+        protected void DateRangeDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadSales();
+        }
 
         // Load sales summary from the database and bind them to the repeater
         private void LoadSales()
         {
+            // Get the selected date range from the dropdown
+            string selectedDateRange = DateRangeDropDown.SelectedValue;
+
             // Get sales summary from the database
-            IEnumerable<SalesSummary> salesSummaries = GetSalesSummary();
+            IEnumerable<SalesSummary> salesSummaries = GetSalesSummary(selectedDateRange);
 
             // Bind sales summaries to the repeater
             SalesRepeater.DataSource = salesSummaries;
             SalesRepeater.DataBind();
+
+            // Calculate and set total accumulated sales and total accumulated profit
+            double totalAccumulatedSales = salesSummaries.Sum(s => s.TotalRevenue);
+            double totalAccumulatedProfit = salesSummaries.Sum(s => s.TotalRevenue * 0.2); // 20% profit
+
+            // Set the summary values
+            TotalAccumulatedSalesLiteral.Text = totalAccumulatedSales.ToString("C");
+            TotalAccumulatedProfitLiteral.Text = totalAccumulatedProfit.ToString("C");
         }
 
         // Retrieve sales summary from the database
-        private IEnumerable<SalesSummary> GetSalesSummary()
+        private IEnumerable<SalesSummary> GetSalesSummary(string selectedDateRange)
         {
             List<SalesSummary> salesSummaries = new List<SalesSummary>();
 
             // Connect to the database and retrieve sales summary
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            string query = "SELECT TransactionID, SUM(TotalOrderPrice) AS TotalOrderPrice FROM Orders GROUP BY TransactionID";
+
+            // Modify the query based on the selected date range
+            string query = "";
+            switch (selectedDateRange)
+            {
+                case "Daily":
+                    query = "SELECT TransactionID, SUM(TotalOrderPrice) AS TotalOrderPrice FROM Orders WHERE OrderDate = CONVERT(date, GETDATE()) GROUP BY TransactionID";
+                    break;
+                case "Weekly":
+                    query = "SELECT TransactionID, SUM(TotalOrderPrice) AS TotalOrderPrice FROM Orders WHERE OrderDate BETWEEN DATEADD(week, -1, GETDATE()) AND GETDATE() GROUP BY TransactionID";
+                    break;
+                case "Monthly":
+                    query = "SELECT TransactionID, SUM(TotalOrderPrice) AS TotalOrderPrice FROM Orders WHERE MONTH(OrderDate) = MONTH(GETDATE()) AND YEAR(OrderDate) = YEAR(GETDATE()) GROUP BY TransactionID";
+                    break;
+                case "Yearly": // Add this case
+                    query = "SELECT TransactionID, SUM(TotalOrderPrice) AS TotalOrderPrice FROM Orders WHERE YEAR(OrderDate) = YEAR(GETDATE()) GROUP BY TransactionID";
+                    break;
+                default:
+                    // Fetch all orders if no specific date range is selected
+                    query = "SELECT TransactionID, SUM(TotalOrderPrice) AS TotalOrderPrice FROM Orders GROUP BY TransactionID";
+                    break;
+                
+            }
+
+            
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -49,8 +88,7 @@ namespace CS107L_MP
                 {
                     SalesSummary salesSummary = new SalesSummary();
                     salesSummary.TransactionID = reader["TransactionID"].ToString();
-                    double totalOrderPrice = Convert.ToDouble(reader["TotalOrderPrice"]);
-                    salesSummary.TotalRevenue = totalOrderPrice * 0.2; // 20% of the total order price
+                    salesSummary.TotalRevenue = Convert.ToDouble(reader["TotalOrderPrice"]);
                     salesSummaries.Add(salesSummary);
                 }
             }
@@ -58,6 +96,4 @@ namespace CS107L_MP
             return salesSummaries;
         }
     }
-
-    
 }

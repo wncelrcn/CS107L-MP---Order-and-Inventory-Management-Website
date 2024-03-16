@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ViewSales.aspx.cs" Inherits="CS107L_MP.ViewSales" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
+   <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
         body {
@@ -51,27 +51,49 @@
         tr:hover td {
             background-color: #e9e9e9;
         }
+
+        .summary {
+            margin-top: 20px;
+            font-weight: bold;
+        }
     </style>
 
     <div class="container">
         <h2>Sales Summary</h2>
-        <asp:Repeater ID="SalesRepeater" runat="server">
-            <HeaderTemplate>
-                <table>
+        <table>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Sales</th>
+                <th>Profit</th>
+            </tr>
+            <asp:Repeater ID="SalesRepeater" runat="server">
+                <ItemTemplate>
                     <tr>
-                        <th>Transaction ID</th>
-                        <th>Total Revenue</th>
+                        <td><%# Eval("TransactionID") %></td>
+                        <td><%# Eval("TotalRevenue", "{0:C}") %></td>
+                        <td><%# (Convert.ToDouble(Eval("TotalRevenue")) * 0.2).ToString("C") %></td>
                     </tr>
-            </HeaderTemplate>
-            <ItemTemplate>
-                <tr>
-                    <td><%# Eval("TransactionID") %></td>
-                    <td><%# Eval("TotalRevenue", "{0:C}") %></td>
-                </tr>
-            </ItemTemplate>
-            <FooterTemplate>
-                </table>
-            </FooterTemplate>
-        </asp:Repeater>
+                </ItemTemplate>
+            </asp:Repeater>
+        </table>
+    </div>   
+    <div class="container">
+        <h2>Total Summary</h2>
+        <form runat="server">
+        <asp:DropDownList ID="DateRangeDropDown" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DateRangeDropDown_SelectedIndexChanged">
+            <asp:ListItem Text="Daily" Value="Daily"></asp:ListItem>
+            <asp:ListItem Text="Weekly" Value="Weekly"></asp:ListItem>
+            <asp:ListItem Text="Monthly" Value="Monthly"></asp:ListItem>
+            <asp:ListItem Text="Yearly" Value="Yearly"></asp:ListItem>
+        </asp:DropDownList>
+        </form>
+        <table>
+            <tr class="summary">
+                <td>Total Accumulated Sales</td>
+                <td><asp:Literal runat="server" ID="TotalAccumulatedSalesLiteral"></asp:Literal></td>
+                <td>Total Accumulated Profit</td>
+                <td><asp:Literal runat="server" ID="TotalAccumulatedProfitLiteral"></asp:Literal></td>
+            </tr>
+        </table>
     </div>
 </asp:Content>
