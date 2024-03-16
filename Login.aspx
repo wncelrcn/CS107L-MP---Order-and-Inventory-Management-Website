@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Log in to ________ "Language="C#" MasterPageFile="~/LogInNav.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="CS107L_MP.WebForm2" %>
+﻿<%@ Page Title="Log in to JLR Food Products Trading"Language="C#" MasterPageFile="~/LogInNav.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="CS107L_MP.WebForm2" %>
 
 <asp:Content ID="LogInContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -14,11 +14,11 @@
           justify-content: center;
           align-items: center;
           min-height: 100vh;
-          background-color: #f5f5f5;
+          background-color: #f3f6f7;
         }
 
         .login-container {
-          background-color: #fff;
+          background-color: #f3f6f7;
           padding: 30px;
           border-radius: 5px;
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -49,8 +49,8 @@
         }
 
         .loginBtn {
-            background-color: green;
-            color: white;
+            background-color: #009688;
+            color: #f3f6f7;
             padding: 15px 30px;  /* Increased horizontal padding for better look */
             margin: 10px 100px;  /* Center the button horizontally */
             border: none;
@@ -59,7 +59,7 @@
         }
 
         .loginBtn:hover {
-            background-color: darkgreen;
+            background-color: #00796b;
         }
 
         .register-link {
@@ -68,19 +68,19 @@
         }
 
         .register-link a {
-          color: blue;  /* Set the link color */
+          color: #009688;  /* Set the link color */
           text-decoration: underline;/* Remove underline from default link style */
         }
 
         .register-link a:hover {
-            color: lightblue;
+            color: #00796b;
         }
 
     </style>
 
     <div class ="login-body">
         <div class ="login-container">
-            <h1>Login to ______</h1>
+            <h1>Login to JLR Food Products Trading</h1>
 
             <form id="Form1" runat="server">
                 <div class="form-group">

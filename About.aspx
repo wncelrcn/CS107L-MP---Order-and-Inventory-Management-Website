@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/NavBar.Master" AutoEventWireup="true" CodeBehind="About.aspx.cs" Inherits="CS107L_MP.About" %>
+﻿<%@ Page Title="About Us" Language="C#" MasterPageFile="~/NavBar.Master" AutoEventWireup="true" CodeBehind="About.aspx.cs" Inherits="CS107L_MP.About" %>
 <asp:Content ID="AboutPage" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>
@@ -12,18 +12,18 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #f3f6f7;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
         h1 {
-            color: #333;
+            color: #231a18;
         }
 
         p {
-            color: #333;
+            color: #231a18;
         }
 
         .container img {
@@ -40,45 +40,45 @@
 
         .highlight {
             font-weight: bold;
-            color: #333;
+            color: #231a18;
         }
 
         
         footer {
-            background-color: #333;
-            color: #fff;
+            background-color: #009688;
+            color: #f3f6f7;
             text-align: center;
             padding: 20px 0;
             margin-top: auto;
         }
 
         footer p {
-            color: #fff; 
+            color: #f3f6f7; 
         }
 
         
     </style>
 
     <div class="container">
-        <h1>Franchise Distributor</h1>
-        <asp:Image ID="YourDistributorImage" runat="server" ImageUrl="https://fsf-bigmindph.weebly.com/uploads/3/7/9/0/37908249/3730793_orig.png" />
-        <p><span class="highlight">Your Distributor</span> is a key player in the realm of franchise distribution, offering a unique and comprehensive solution for aspiring entrepreneurs. Our commitment extends beyond mere business transactions; we are dedicated to empowering franchisees and fostering success in every venture.</p>
+        <h1>JLR Food Products Trading</h1>
+        <asp:Image ID="YourDistributorImage" runat="server"  ImageUrl="~/Pics/About-us.jpg" />
+        <p>Welcome to <span class="highlight">JLR Food Products Trading</span>, a cornerstone in the realm of First Brew Coffee franchise distribution. We offer a specialized and comprehensive solution designed to empower aspiring entrepreneurs like you. Our commitment transcends mere transactions; we are dedicated to fostering success in every venture we support.</p>
 
         <h2>Our Services</h2>
         <ul>
-            <li><span class="highlight">Franchise Support</span>: We provide unparalleled support to our franchisees, guiding them through every step of the business journey. From initial setup to ongoing operations, we are invested in the success of each franchise.</li>
-            <li><span class="highlight">Resource Procurement</span>: As a distributor, we specialize in sourcing and supplying high-quality raw materials, ingredients, and utilities essential for franchise operations. Our extensive network ensures a seamless and efficient supply chain.</li>
+            <li><span class="highlight">Franchisee Empowerment</span>: We provide unparalleled support to our First Brew Coffee franchisees, guiding them through every stage of their business journey. From initial setup to ongoing operations, we are deeply invested in the success of each franchisee we serve.</li>
+            <li><span class="highlight">Quality Ingredient Sourcing</span>: As a provincial distributor, we specialize in sourcing and supplying high-quality raw materials, ingredients, and utilities essential for First Brew Coffee franchise operations. Our extensive network ensures a seamless and efficient supply chain, empowering franchisees to focus on delivering exceptional coffee experiences to their customers.</li>
         </ul>
 
         <h2>Collaborative Network</h2>
-        <p>At <span class="highlight">Your Distributor</span>, we believe in the strength of collaboration. Our network of franchisees forms a community that shares resources, experiences, and best practices. Together, we build a foundation for mutual growth and prosperity.</p>
+        <p>At <span class="highlight">JLR Food Products Trading</span>, we believe in the power of collaboration. Our network of First Brew Coffee franchisees forms a community built on sharing resources, experiences, and best practices. Together, we establish a solid foundation for mutual growth and prosperity within the provincial coffee industry.</p>
 
         <h2>Technology Integration</h2>
-        <p>We embrace cutting-edge technology to enhance the efficiency of our distribution system. Our state-of-the-art Sales and Inventory Management System ensures real-time tracking, order fulfillment, and inventory control, providing franchisees with the tools they need for success.</p>
+        <p>We leverage cutting-edge technology to streamline our distribution system. Our state-of-the-art Order, Sales, and Inventory Management System enables real-time tracking, efficient order fulfillment, and precise inventory control. This empowers First Brew Coffee franchisees with the tools they need to thrive in today's competitive market landscape.</p>
     </div>
 
     <footer>
-    <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+    <p>&copy; 2024 JLR Food Products Trading. All rights reserved.</p>
     </footer>
 
 </asp:Content>

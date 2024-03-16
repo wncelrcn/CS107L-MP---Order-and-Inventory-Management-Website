@@ -13,7 +13,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #f3f6f7;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -28,19 +28,19 @@
             font-size: 48px;
             margin-bottom: 20px;
             font-weight: bold;
-            color: #333;
+            color: #231a18;
         }
 
         .hero p {
             font-size: 18px;
             margin-bottom: 30px;
-            color: #333;
+            color: #231a18;
         }
 
         .btn {
             display: inline-block;
-            background-color: #333;
-            color: #fff;
+            background-color: #009688;
+            color: #f3f6f7;
             padding: 15px 30px;
             text-decoration: none;
             border-radius: 5px;
@@ -49,12 +49,12 @@
         }
 
         .btn:hover {
-            background-color: #555;
+            background-color: #00796b;
         }
 
         footer {
-            background-color: #333;
-            color: #fff;
+            background-color: #009688;
+            color: #f3f6f7;
             text-align: center;
             padding: 20px 0;
             margin-top: auto;
@@ -77,15 +77,15 @@
 
     <div class="container">
         <div class="hero">
-            <h1>Franchise Distributor</h1>
-             <img src="https://www.epgdlaw.com/wp-content/uploads/2021/06/60094008_s.jpg" alt="Your Image Alt Text">
-            <h2>Empowering Entrepreneurs, Enriching Communities.</h2>
-            <p>Order online and blah blah blah blah blah.</p>
+            <h1>JLR Food Products Trading</h1>
+            <img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Trading">
+            <h2>Empower Your First Brew Coffee Business</h2>
+            <p>Supplying Quality Ingredients and Materials to Fuel Your Success as a First Brew Coffee Franchisee. Elevate your Coffee Offering Today!</p>
             <a href="Login.aspx" class="btn">Order Now</a>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+        <p>&copy; 2024 JLR Food Products Trading. All rights reserved.</p>
     </footer>
 </asp:Content>

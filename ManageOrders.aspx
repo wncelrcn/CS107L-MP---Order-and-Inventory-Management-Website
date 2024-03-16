@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ManageOrders.aspx.cs" Inherits="CS107L_MP.ManageOrders" %>
+﻿<%@ Page Title="Manage Orders" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ManageOrders.aspx.cs" Inherits="CS107L_MP.ManageOrders" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         /* CSS styles here */

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrderNav.Master" AutoEventWireup="true" CodeBehind="Order.aspx.cs" Inherits="CS107L_MP.Order" %>
+﻿<%@ Page Title="Order Products" Language="C#" MasterPageFile="~/OrderNav.Master" AutoEventWireup="true" CodeBehind="Order.aspx.cs" Inherits="CS107L_MP.Order" %>
 <asp:Content ID="OrderPage" ContentPlaceHolderID="MainContent" runat="server">
     <style>
 
@@ -29,7 +29,7 @@
         .product-name {
             font-weight: bold;
             font-size: 16px;
-            color: #333;
+            color: #231a18;
             margin-bottom: 5px;
         }
 
@@ -53,7 +53,7 @@
 
         h1 {
             font-size: 36px;
-            color: #333;
+            color: #231a18;
             margin-bottom: 30px;
             text-align: left;
             margin-left: 5.5rem;
@@ -85,7 +85,7 @@
 
         .dropDown:hover {
             background-color: #009688;
-            color: #fff;
+            color: #f3f6f7;
         }
 
         /* Styles for the h2 element */
@@ -116,7 +116,7 @@
             margin-left: 10px;
             padding: 5px 10px;
             background-color: #009688;
-            color: #fff;
+            color: #f3f6f7;
             border: none;
             border-radius: 5px;
             cursor: pointer;

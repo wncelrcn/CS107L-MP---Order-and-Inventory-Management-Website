@@ -12,11 +12,11 @@
             font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f3f6f7;
         }
 
         .navbar {
-            background-color: #333;
+            background-color: #009688;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
@@ -24,7 +24,7 @@
         }
 
         .navbar a {
-            color: #fff;
+            color: #f3f6f7;
             text-decoration: none;
             padding: 10px 20px;
             transition: background-color 0.3s ease;
@@ -32,11 +32,11 @@
         }
 
         .navbar a:hover {
-            background-color: #555;
+            background-color: #00796b;
         }
 
         .navbar a.logo img {
-            height: 40px;
+            height: 35px;
         }
 
         .navbar .right-links {
@@ -52,7 +52,7 @@
 <body>
     
     <div class="navbar">
-        <a href="Admin.aspx" class="logo"><img src="#" alt="Logo"></a>
+        <a href="Admin.aspx" class="logo"><img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Products Trading"></a>
         <div class ="right-links">
             <a href="ManageOrders.aspx">Manage Orders</a>
             <a href="ManageInventory.aspx">Manage Inventory</a>

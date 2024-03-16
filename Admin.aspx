@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="CS107L_MP.Admin" %>
+﻿<%@ Page Title="Admin Panel" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="CS107L_MP.Admin" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         /* CSS styles here */
@@ -56,7 +56,7 @@
     </style>
 
     <div class="container">
-        <img src="admin-icon.png" alt="Admin Icon" class="admin-icon">
+        <img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Products Trading" class="admin-icon">
         <h1>Welcome to Admin Panel</h1>
         <p>You have access to manage various aspects such as your Orders, Inventory, and Sales.</p>
         <div style="text-align: center;">

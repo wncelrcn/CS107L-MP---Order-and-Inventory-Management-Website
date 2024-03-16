@@ -4,7 +4,7 @@
 
 <html>
 <head runat="server">
-    <title>Order Management Website</title>
+    <title>JLR Food Products Trading</title>
     <style>
 
         body {
@@ -15,7 +15,7 @@
         }
            
         .navbar {
-            background-color: #333;
+            background-color: #009688;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
@@ -23,7 +23,7 @@
         }
 
         .navbar a {
-            color: #fff;
+            color: #f3f6f7;
             text-decoration: none;
             padding: 10px 20px;
             transition: background-color 0.3s ease;
@@ -31,11 +31,11 @@
         }
 
         .navbar a:hover {
-            background-color: #555;
+            background-color: #00796b;
         }
 
         .navbar a.logo img {
-            height: 40px;
+            height: 35px;
         }
 
         .navbar .right-links {
@@ -53,7 +53,7 @@
 <body>
     
     <div class="navbar">
-        <a href="Home.aspx" class="logo"><img src="#" alt="Logo"></a>
+        <a href="Home.aspx" class="logo"><img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Products Trading"></a>
         <div class ="right-links">
             <a href="About.aspx">About Us</a>
             <a href="Login.aspx">Login</a>

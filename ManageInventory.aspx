@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ManageInventory.aspx.cs" Inherits="CS107L_MP.ManageInventory" %>
+﻿<%@ Page Title="Update Inventory" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ManageInventory.aspx.cs" Inherits="CS107L_MP.ManageInventory" %>
 <asp:Content ID="ManageInventoryPage" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         /* CSS styles here */
