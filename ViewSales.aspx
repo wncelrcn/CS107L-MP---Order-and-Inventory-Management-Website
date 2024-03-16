@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Sales Report" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ViewSales.aspx.cs" Inherits="CS107L_MP.ViewSales" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ViewSales.aspx.cs" Inherits="CS107L_MP.ViewSales" %>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
    <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -12,14 +12,17 @@
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             font-size: 24px;
             font-weight: 600;
-            color: #333;
+            color: #009688;
             margin-bottom: 20px;
         }
 
@@ -57,16 +60,15 @@
             font-weight: bold;
         }
 
-
         .custom-dropdown {
-            width: 200px; /* Adjust width as needed */
-            padding: 5px;
+            width: 100%;
+            padding: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #fff;
             color: #333;
             font-size: 14px;
-            /* Add more styles as needed */
+            margin-bottom: 20px;
         }
 
     </style>

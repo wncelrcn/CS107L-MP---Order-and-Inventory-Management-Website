@@ -114,6 +114,12 @@
         .total-cart-container label {
             font-size: 18px;
         }
+
+         @media (max-width: 768px) {
+             .remove-button {
+                 font-size: 14px;
+             }
+         }
     </style>
 
     <form id="Form1" runat="server">

@@ -5,13 +5,14 @@
 <html>
 <head runat="server">
     <title></title>
-    <style>
+         <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
         body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f3f6f7;
+            font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
 
         .navbar {
@@ -23,7 +24,7 @@
         }
 
         .navbar a {
-            color: #f3f6f7;
+            color: #fff;
             text-decoration: none;
             padding: 10px 20px;
             transition: background-color 0.3s ease;
@@ -35,32 +36,69 @@
         }
 
         .navbar a.logo img {
-            height: 35px;
+            height: 40px;
+        }
+
+        .navbar .menu-icon {
+            margin-right: auto;
+            display: none;
+            cursor: pointer;
+            position: fixed;
+            color: white;
+            font-size: 30px;
+            right: 20px;
+            top: 20px;
+            margin-top: -12px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar .menu-icon:hover {
+            transform: scale(1.1);
         }
 
         .navbar .right-links {
-            margin-left: auto;
+            display: flex;
+            align-items: center;
         }
 
-        /* Adjust styles for login and register links */
         .navbar .right-links a {
-            margin-left: 10px; /* Add some space between links */
+            margin-left: 10px;
         }
 
-        
-</style>
+        /* Adjust styles for smaller screens */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .navbar .menu-icon {
+                display: block; /* Display the menu icon */
+            }
+
+            .navbar .right-links {
+                display: none; /* Hide the links by default */
+                flex-direction: column; /* Arrange links vertically */
+                width: 100%; /* Occupy full width */
+            }
+
+            .navbar .right-links a {
+                margin: 5px 20px; /* Adjust margin for vertical arrangement */
+            }
+        }
+    </style>
 </head>
 <body>
     
     <div class="navbar">
-        <a href="Order.aspx" class="logo"><img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Products Trading"></a>
-        <div class ="right-links">
+        <a href="Admin.aspx" class="logo"><img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Products Trading"></a>
+        <div class="right-links">
             <a href="Cart.aspx">My Cart</a>
             <a href="MyOrders.aspx">My Orders</a>
-            <a href="Home.aspx">Log Out</a>
-            
+            <a href="Home.aspx">Logout</a>
         </div>
-        
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
     </div>
 
     <div>
@@ -68,6 +106,12 @@
         </asp:ContentPlaceHolder>
     </div>
 
+    <script>
+        function toggleMenu() {
+            var links = document.querySelector('.right-links');
+            links.style.display = (links.style.display === 'none' || links.style.display === '') ? 'flex' : 'none';
+        }
+    </script>
     
 </body>
 </html>

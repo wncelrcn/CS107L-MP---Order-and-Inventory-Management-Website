@@ -18,6 +18,10 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         h1 {
@@ -35,13 +39,15 @@
         }
 
         .btn {
-            display: inline-block;
+            display: block;
             padding: 12px 24px;
             background-color: #009688;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            margin: 10px auto; /* Center horizontally */
+            text-align: center; /* Center text */
         }
 
         .btn:hover {
@@ -55,11 +61,11 @@
         }
     </style>
 
-    <div class="container">
+     <div class="container">
         <img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Products Trading" class="admin-icon">
         <h1>Welcome to Admin Panel</h1>
         <p>You have access to manage various aspects such as your Orders, Inventory, and Sales.</p>
-        <div style="text-align: center;">
+        <div>
             <a href="ManageOrders.aspx" class="btn">Manage your Orders</a>
             <a href="ManageInventory.aspx" class="btn">Manage Inventory</a>
             <a href="ViewSales.aspx" class="btn">View your Sales</a>

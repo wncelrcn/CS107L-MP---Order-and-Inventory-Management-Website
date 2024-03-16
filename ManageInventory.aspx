@@ -115,7 +115,34 @@
         .update-stock-button:hover {
             background-color: #00796b;
         }
+
+        @media (max-width: 768px) {
+            .product-container {
+                width: calc(50% - 20px); 
+            }
+            .update-stock-button {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-container {
+                width: calc(100% - 20px); 
+                margin-right: 0;
+            }
+
+            h1 {
+                text-align: center; 
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .update-stock-button {
+                font-size: 12px;
+            }
+        }
     </style>
+
     <h1>Manage Inventory</h1>
     <form id="form1" runat="server">
         <div class="dropdown-container">

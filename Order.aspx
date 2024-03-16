@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Order Products" Language="C#" MasterPageFile="~/OrderNav.Master" AutoEventWireup="true" CodeBehind="Order.aspx.cs" Inherits="CS107L_MP.Order" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrderNav.Master" AutoEventWireup="true" CodeBehind="Order.aspx.cs" Inherits="CS107L_MP.Order" %>
 <asp:Content ID="OrderPage" ContentPlaceHolderID="MainContent" runat="server">
     <style>
 
@@ -29,7 +29,7 @@
         .product-name {
             font-weight: bold;
             font-size: 16px;
-            color: #231a18;
+            color: #333;
             margin-bottom: 5px;
         }
 
@@ -53,11 +53,10 @@
 
         h1 {
             font-size: 36px;
-            color: #231a18;
+            color: #333;
             margin-bottom: 30px;
             text-align: left;
             margin-left: 5.5rem;
-            
         }
 
         /* Styles for the DropDownList container */
@@ -80,12 +79,13 @@
             transition: all 0.3s ease;
             display: inline-block; /* Change display to inline-block */
             vertical-align: top; /* Align top */
-            margin-left: 20px; /* Adjust margin left to match products */
+            margin-left: auto; /* Center the dropdown container */
+            margin-right: auto; /* Center the dropdown container */
         }
 
         .dropDown:hover {
             background-color: #009688;
-            color: #f3f6f7;
+            color: #fff;
         }
 
         /* Styles for the h2 element */
@@ -93,7 +93,7 @@
             font-size: 24px;
             color: #009688;
             margin-bottom: 20px;
-            text-align: center;
+            text-align: center; /* Center the h2 element */
             text-transform: uppercase;
         }
 
@@ -116,7 +116,7 @@
             margin-left: 10px;
             padding: 5px 10px;
             background-color: #009688;
-            color: #f3f6f7;
+            color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -126,7 +126,25 @@
             background-color: #00796b;  
         }
 
+        /* Add media query for smaller screens */
+        @media (max-width: 768px) {
+            .product-container {
+                width: calc(50% - 20px); /* Adjust for two products per row */
+            }
+        }
 
+        @media (max-width: 480px) {
+            .product-container {
+                width: calc(100% - 20px); /* Full width for smaller screens */
+                margin-right: 0;
+            }
+
+            h1 {
+                text-align: center; 
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
 
     </style>
     <h1>Hi, <%:Session["Username"]%>!  </h1>
@@ -141,8 +159,7 @@
                 <asp:ListItem Text="Other Essentials" Value="Misc"></asp:ListItem>
             </asp:DropDownList>
         </div>
-
-        <!-- Centered container for product repeater items -->
+        
         <div class="products-container clearfix">
             <asp:Repeater ID="ProductRepeater" runat="server">
                 <ItemTemplate>

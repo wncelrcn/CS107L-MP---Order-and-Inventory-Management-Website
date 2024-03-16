@@ -90,6 +90,12 @@
             border-radius: 4px;
         }
 
+        @media (max-width: 768px) {
+            .order-status .btnUpdateStatus {
+                margin-top: 10px;
+            }
+        }
+
     </style>
 
     <div class="container">
