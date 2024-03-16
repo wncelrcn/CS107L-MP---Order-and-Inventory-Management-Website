@@ -95,7 +95,7 @@
 
                 <div class="form-group">
                     <asp:Label ID="contactLbl" runat="server" Text="Contact Number:"></asp:Label><br />
-                    <asp:TextBox ID="contactTxtBox" runat="server"></asp:TextBox>
+<asp:TextBox ID="contactTxtBox" runat="server" placeholder="(e.g., 09123456789)"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="contactValid" runat="server" ErrorMessage="*" ControlToValidate="contactTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="contactValid2" runat="server" ErrorMessage="Enter a valid phone number!" ControlToValidate="contactTxtBox" ForeColor="#CC0000" ValidationExpression="^09\d{9}$"></asp:RegularExpressionValidator><br />
                 </div>
@@ -111,13 +111,15 @@
                     <asp:Label ID="usernameLbl" runat="server" Text="Enter a username:"></asp:Label><br />
                     <asp:TextBox ID="usernameTxtBox" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="usernameValid" runat="server" ErrorMessage="*" ControlToValidate="usernameTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
-                </div>
+                </div>  
 
                 <div class="form-group">
-                    <asp:Label ID="passLbl" runat="server" Text="Enter a password:"></asp:Label><br />
-                    <asp:TextBox ID="passTxtBox" runat="server" TextMode="Password"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="passValid" runat="server" ErrorMessage="*" ControlToValidate="passTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
-                </div>
+    <asp:Label ID="passLbl" runat="server" Text="Enter a password:"></asp:Label><br />
+    <asp:TextBox ID="passTxtBox" runat="server" TextMode="Password"></asp:TextBox>
+    <asp:RequiredFieldValidator ID="passValid" runat="server" ErrorMessage="*" ControlToValidate="passTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+    <asp:RegularExpressionValidator ID="passValidRegex" runat="server" ErrorMessage="Password must contain at least one uppercase character and one digit" ControlToValidate="passTxtBox" ValidationExpression="^(?=.*[A-Z])(?=.*\d).*$" ForeColor="#CC0000"></asp:RegularExpressionValidator><br />
+</div>
+
 
                 <div class="form-group">
                     <asp:Label ID="passLbl2" runat="server" Text="Confirm your password:"></asp:Label><br />

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace CS107L_MP
 {
@@ -25,48 +20,54 @@ namespace CS107L_MP
 
                 try
                 {
-                    // Check if the username and password combination is valid
-                    if (username.ToLower() == "admin" && password == "password")
+                    // Establish connection to the SQL database
+                    string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        // Authentication successful for admin
-                        // Set the session variable for the username
-                        Session["Username"] = username;
+                        connection.Open();
 
-                        // Redirect to the Admin.aspx page for admin users
-                        Response.Redirect("Admin.aspx");
-                    }
-                    else
-                    {
-                        // Establish connection to the SQL database
-                        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        string query;
+                        if (username.ToLower() == "admin")
                         {
-                            connection.Open();
+                            // If the username is admin, retrieve password from AdminCredentials table
+                            query = "SELECT COUNT(*) FROM AdminCredentials WHERE AdminUsername = @username AND Password = @password";
+                        }
+                        else
+                        {
+                            // Otherwise, retrieve password from AuthUsers table
+                            query = "SELECT COUNT(*) FROM AuthUsers WHERE Username = @username AND Password = @password";
+                        }
 
-                            // Check if the username and password combination exists in AuthUsers table
-                            string query = "SELECT COUNT(*) FROM AuthUsers WHERE username = @username AND password = @password";
-                            SqlCommand command = new SqlCommand(query, connection);
-                            command.Parameters.AddWithValue("@username", username);
-                            command.Parameters.AddWithValue("@password", password);
-                            int count = (int)command.ExecuteScalar();
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.Parameters.AddWithValue("@username", username);
+                        command.Parameters.AddWithValue("@password", password);
+                        int count = (int)command.ExecuteScalar();
 
-                            if (count > 0)
+                        if (count > 0)
+                        {
+                            // Authentication successful
+                            // Set the session variable for the username
+                            Session["Username"] = username;
+
+                            // Redirect to the appropriate page based on user role
+                            if (username.ToLower() == "admin")
                             {
-                                // Authentication successful for regular users
-                                // Set the session variable for the username
-                                Session["Username"] = username;
-
-                                // Redirect to the Order.aspx page
-                                Response.Redirect("Order.aspx");
+                                // Redirect to the Admin.aspx page for admin users
+                                Response.Redirect("Admin.aspx");
                             }
                             else
                             {
-                                // Authentication failed
-                                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid username or password.');", true);
+                                // Redirect to the Order.aspx page for regular users
+                                Response.Redirect("Order.aspx");
                             }
-
-                            connection.Close();
                         }
+                        else
+                        {
+                            // Authentication failed
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid username or password.');", true);
+                        }
+
+                        connection.Close();
                     }
                 }
                 catch (Exception ex)
@@ -80,8 +81,5 @@ namespace CS107L_MP
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please check your Inputs.');", true);
             }
         }
-
-
-
     }
 }

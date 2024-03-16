@@ -1,5 +1,6 @@
 -- Drop tables if they exist
 DROP TABLE IF EXISTS AuthUsers;
+DROP TABLE IF EXISTS AdminCredentials;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Products;
 DROP TABLE IF EXISTS ShoppingCart;
@@ -13,8 +14,8 @@ CREATE TABLE Users (
     LastName NVARCHAR(50) NOT NULL,
     ContactNumber NVARCHAR(20) NOT NULL,
     Address NVARCHAR(255) NOT NULL,
-    CONSTRAINT CHK_ContactNumber CHECK (LEN(ContactNumber) = 10), -- Check contact number length
-    CONSTRAINT CHK_Address CHECK (LEN(Address) > 0) -- Check address is not empty
+    CONSTRAINT CHK_ContactNumber CHECK (LEN(ContactNumber) = 11), -- Check contact number length
+    
 );
 
 
@@ -22,9 +23,17 @@ CREATE TABLE Users (
 CREATE TABLE AuthUsers (
     Username VARCHAR(100) NOT NULL PRIMARY KEY,
     Password VARCHAR(100) NOT NULL,
-    FOREIGN KEY (Username) REFERENCES Users(username)
+    CONSTRAINT FK_AuthUsers_Users FOREIGN KEY (Username) REFERENCES Users(username)
 );
 
+-- Create AdminCredentials table
+CREATE TABLE AdminCredentials (
+    AdminUsername VARCHAR(100) NOT NULL PRIMARY KEY,
+    Password VARCHAR(100) NOT NULL,
+);
+
+-- Insert admin credentials
+INSERT INTO AdminCredentials (AdminUsername, Password) VALUES ('admin', 'password');
 
 
 -- Create Products table

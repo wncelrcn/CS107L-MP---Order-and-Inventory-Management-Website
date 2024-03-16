@@ -204,6 +204,15 @@ namespace CS107L_MP
         protected global::System.Web.UI.WebControls.RequiredFieldValidator passValid;
 
         /// <summary>
+        /// passValidRegex control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator passValidRegex;
+
+        /// <summary>
         /// passLbl2 control.
         /// </summary>
         /// <remarks>
