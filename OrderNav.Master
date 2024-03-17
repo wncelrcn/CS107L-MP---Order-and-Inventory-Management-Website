@@ -92,7 +92,7 @@
 <body>
     
     <div class="navbar">
-        <a href="Admin.aspx" class="logo"><img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Products Trading"></a>
+        <a href="Order.aspx" class="logo"><img src="/Pics/JLR%20Food%20Trading.png" alt="JLR Food Products Trading"></a>
         <div class="right-links">
             <a href="Cart.aspx">My Cart</a>
             <a href="MyOrders.aspx">My Orders</a>

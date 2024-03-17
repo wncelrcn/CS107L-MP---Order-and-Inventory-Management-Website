@@ -1,4 +1,4 @@
-﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ViewSales.aspx.cs" Inherits="CS107L_MP.ViewSales" %>
+﻿ <%@ Page Title="View Sales Report" Language="C#" MasterPageFile="~/AdminNavBar.Master" AutoEventWireup="true" CodeBehind="ViewSales.aspx.cs" Inherits="CS107L_MP.ViewSales" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
    <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
