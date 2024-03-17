@@ -113,8 +113,6 @@ CREATE TABLE ShoppingCart (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
--- Drop table if exists
-DROP TABLE IF EXISTS Orders;
 
 -- Create Orders table
 CREATE TABLE Orders (
