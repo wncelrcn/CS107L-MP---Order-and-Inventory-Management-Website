@@ -96,7 +96,7 @@
         <div class="right-links">
             <a href="About.aspx">About us</a>
             <a href="LogIn.aspx">Log In</a>
-            <a href="Register.aspx">Registers</a>
+            <a href="Register.aspx">Register</a>
         </div>
         <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
     </div>
