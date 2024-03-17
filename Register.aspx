@@ -3,6 +3,17 @@
 
 
 <asp:Content ID="RegisterContent" ContentPlaceHolderID="MainContent" runat="server">
+
+    <script>
+    function checkUsername(sender, args) {
+        var username = document.getElementById('<%= usernameTxtBox.ClientID %>').value;
+        if (username.toLowerCase() === 'admin') {
+            args.IsValid = false;
+        } else {
+            args.IsValid = true;
+        }
+    }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -108,10 +119,11 @@
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="usernameLbl" runat="server" Text="Enter a username:"></asp:Label><br />
-                    <asp:TextBox ID="usernameTxtBox" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="usernameValid" runat="server" ErrorMessage="*" ControlToValidate="usernameTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator><br />
-                </div>  
+        <asp:Label ID="usernameLbl" runat="server" Text="Enter a username:"></asp:Label><br />
+        <asp:TextBox ID="usernameTxtBox" runat="server"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="usernameValid" runat="server" ErrorMessage="*" ControlToValidate="usernameTxtBox" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+        <asp:CustomValidator ID="usernameCustomValid" runat="server" ErrorMessage="Username cannot be 'admin'. Please choose another username." ClientValidationFunction="checkUsername" ForeColor="#CC0000"></asp:CustomValidator><br />
+    </div>  
 
                 <div class="form-group">
     <asp:Label ID="passLbl" runat="server" Text="Enter a password:"></asp:Label><br />
